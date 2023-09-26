@@ -1,8 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:good_will/screens/HomeScreen.dart';
+import 'package:good_will/screens/MatchScreen.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../backend/SharedPref.dart';
+import 'LoginScreen.dart';
 
 /// Flutter code sample for [BottomNavigationBar].
-
-
 
 class BottomNavigationBarExampleApp extends StatelessWidget {
   const BottomNavigationBarExampleApp({super.key});
@@ -10,6 +17,7 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: BottomNavigationBarExample(),
     );
   }
@@ -27,22 +35,16 @@ class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static const List<Widget> _widgetOptions = <Widget>[
+    HomeScreen(),
+    MatchScreen(),
     Text(
-      'Index 0: Home',
+      'Wallet',
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
+      'Profile',
       style: optionStyle,
     ),
   ];
@@ -50,45 +52,58 @@ class _BottomNavigationBarExampleState
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-      ),
+
+
+
+
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+      bottomNavigationBar: GNav(
+        // rippleColor: Colors.grey[300]!,
+        // hoverColor: Colors.grey[100]!,
+        gap: 8,
+        curve: Curves.easeOut,
+        activeColor: Colors.white,
+        iconSize: 28,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        duration: const Duration(milliseconds: 400),
+        tabBackgroundColor: Colors.teal,
+        backgroundColor: Colors.teal[100]!,
+        color: Colors.teal,
+        tabs: const [
+          GButton(
+            icon: Icons.home,
+            text: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
+          GButton(
+            icon: Icons.games,
+            text: 'Games',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
+          GButton(
+            icon: Icons.currency_rupee,
+            text: 'Wallet',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
+          GButton(
+            icon: Icons.person,
+            text: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        selectedIndex: _selectedIndex,
+        onTabChange: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
+
     );
   }
 }

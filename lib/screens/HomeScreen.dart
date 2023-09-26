@@ -1,5 +1,3 @@
-
-
 import 'package:card_swiper/card_swiper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,14 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:good_will/backend/SharedPref.dart';
 import 'package:good_will/screens/HeroGame.dart';
 import 'package:good_will/screens/LoginScreen.dart';
-import 'package:good_will/widget/game.dart';
-import 'package:good_will/widget/gameNameSlogan.dart';
-import 'package:good_will/widget/headingType.dart';
-import 'package:good_will/widget/timerUI.dart';
-import 'package:good_will/widget/winnerList.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../widget/rowHeading.dart';
 import 'EliteGame.dart';
 import 'FizzGame.dart';
 import 'NovelGame.dart';
@@ -28,40 +21,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Material(
+
+
       child: Scaffold(
           appBar: AppBar(
             elevation: 0,
+            backgroundColor: Colors.teal,
             actions: [
               TextButton(
                   onPressed: () async {
@@ -77,44 +46,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                     context.nextAndRemoveUntilPage(LoginScreen());
                   },
-                  child: const Text(
-                    "Log Out",
-                    style: TextStyle(color: Colors.white),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)
+                    ),
+                    child: const Text(
+                      "Log Out",
+                      style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+                    ),
                   ))
             ],
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                // backgroundColor: Colors.red,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.business),
-                label: 'Business',
-                // backgroundColor: Colors.green,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                label: 'School',
-                // backgroundColor: Colors.purple,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings, ),
-                label: 'Settings',
-                // backgroundColor: Colors.pink,
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Colors.teal,
-            backgroundColor: Colors.red,
-            unselectedItemColor: Colors.teal[400],
-            type: BottomNavigationBarType.shifting,
 
 
-            onTap: _onItemTapped,
-          ),
+
           body: Stack(
             children: [
               SizedBox(
@@ -159,7 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 20, left: 30, right: 30),
-                    /// Balance Card Design
+
+                      /// Balance Card Design
                       child: SizedBox(
                         height: 200,
                         width: double.infinity,
@@ -177,7 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-
                                     Text(
                                       "Amjad Ali".toUpperCase(),
                                       style: const TextStyle(
@@ -242,7 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             height: 20,
                                             child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
-                                                    backgroundColor: Colors.red),
+                                                    backgroundColor:
+                                                        Colors.red),
                                                 onPressed: () {},
                                                 child: const Text(
                                                   "RECHARGE",
@@ -275,10 +223,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               Expanded(
                                                 child: Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 18,
-                                                          vertical: 0),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 0),
                                                   decoration: BoxDecoration(
                                                       color: Colors.red,
                                                       borderRadius:
@@ -306,10 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               Expanded(
                                                 child: Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 18,
-                                                          vertical: 0),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 0),
                                                   decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
@@ -339,10 +287,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               Expanded(
                                                 child: Container(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 22,
-                                                          vertical: 0),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 22,
+                                                      vertical: 0),
                                                   decoration: BoxDecoration(
                                                       color: Colors.green,
                                                       borderRadius:
@@ -376,14 +324,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 500,
                       child: Swiper(
-                        itemBuilder: (BuildContext context,int index){
-                          List<Widget> list=[ const NovelGame(),const FizzGame(), const EliteGame(), const HeroGame()] ;
+                        itemBuilder: (BuildContext context, int index) {
+                          List<Widget> list = [
+                            const NovelGame(),
+                            const FizzGame(),
+                            const EliteGame(),
+                            const HeroGame()
+                          ];
                           return SingleChildScrollView(child: list[index]);
                         },
                         itemCount: 4,
                         pagination: const SwiperPagination(),
-                        control:
-                        const SwiperControl(),
+                        control: const SwiperControl(),
                       ),
                     ),
                   ],

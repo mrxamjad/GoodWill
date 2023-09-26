@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:good_will/backend/getColorByName.dart';
 import 'package:good_will/widget/rowHeading.dart';
 
-Container winnerList({String id="ID",String duo="red",String trio="purple",String neo="blue",String totalWinner="100",Color duoColor=Colors.white, Color trioColor=Colors.white,Color neoColor=Colors.white, })
+Container winnerList({String id="ID",String duo="red",String trio="purple",String neo="blue",String totalWinner="100", })
 {
   return Container(
     margin: const EdgeInsets.symmetric( horizontal: 12, vertical: 1),
