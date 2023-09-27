@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:good_will/backend/getColorByName.dart';
 import 'package:good_will/widget/rowHeading.dart';
 
-Container matchList({String id="ID",String match="NOVEL",String process="Finished",String status="Won",String totalWinner="₹100000", })
+Container matchList({String id="ID",String match="NOVEL",String process="Finished",String status="Won",String totalWinner="₹100000", Color idTextColor =Colors.teal,Color idBgColor =Colors.white,Color amountBgColor =Colors.white ,Color amountTextColor =Colors.teal  })
 {
   return Container(
     margin: const EdgeInsets.symmetric( horizontal: 12, vertical: 5),
@@ -18,12 +18,12 @@ Container matchList({String id="ID",String match="NOVEL",String process="Finishe
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children:  [
-        rowHeading(id, flex: 2, textColor: Colors.teal, bgColor: Colors.white, fontSize: 10),
+        rowHeading(id, flex: 2, textColor: idTextColor, bgColor: idBgColor, fontSize: 10),
         rowHeading(match,bgColor: Colors.teal, fontSize: 11),
         rowHeading(process,bgColor: getColorByName(process),fontSize: 11),
         // if(process=="Finished")
         rowHeading(status,bgColor: getColorByName(status),fontSize: 11),
-        rowHeading(totalWinner,textColor: Colors.teal, bgColor: Colors.teal[100]!,fontSize: 12 ),
+        rowHeading(totalWinner,textColor: amountTextColor, bgColor: amountBgColor,fontSize: 12 ),
       ],
     ),
   );

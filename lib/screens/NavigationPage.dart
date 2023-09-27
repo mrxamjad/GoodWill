@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:good_will/screens/HomeScreen.dart';
 import 'package:good_will/screens/MatchScreen.dart';
+import 'package:good_will/screens/WalletScreen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -39,10 +40,7 @@ class _BottomNavigationBarExampleState
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     MatchScreen(),
-    Text(
-      'Wallet',
-      style: optionStyle,
-    ),
+    WalletScreen(),
     Text(
       'Profile',
       style: optionStyle,

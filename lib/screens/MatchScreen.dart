@@ -16,7 +16,7 @@ class _MatchScreenState extends State<MatchScreen> {
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: Text("Games"),
+        title: const Text("Games History"),
         centerTitle: true
         ,
 
@@ -25,12 +25,29 @@ class _MatchScreenState extends State<MatchScreen> {
         height: double.infinity,
         child: Column(
           children: [
-            matchList(
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.teal[100]
+              ),
+              child: matchList(
 
-              match: "Match",
-              process: "Process",
-              status: "Status",
-                totalWinner: "Amount"),
+                match: "Match",
+                process: "Process",
+                status: "Status",
+                  totalWinner: "Amount",
+                amountBgColor: Colors.teal,
+                amountTextColor: Colors.white,
+                idBgColor: Colors.teal,
+                idTextColor: Colors.white,
+                id:"Match ID"
+
+
+
+
+
+
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: 100,

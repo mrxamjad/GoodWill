@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:good_will/backend/SharedPref.dart';
 import 'package:good_will/screens/HeroGame.dart';
 import 'package:good_will/screens/LoginScreen.dart';
+import 'package:good_will/widget/pageBackground.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -66,39 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SizedBox(
                 width: double.infinity,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.teal[100],
-                            borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(70),
-                                bottomRight: Radius.circular(70)),
-                          ),
-
-                          // child: Text("Card1"),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 6,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(70),
-                                topRight: Radius.circular(70)),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                child: pageBackground(fistBoxColor: Colors.teal[100]!, secondBoxColor: Colors.grey[300]!)
               ),
               SingleChildScrollView(
                 child: Column(
