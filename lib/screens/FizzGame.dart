@@ -19,7 +19,7 @@ class _FizzGameState extends State<FizzGame> {
     return Column(
       children: [
         SizedBox(
-          height: 420,
+          height: 450,
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Card(
@@ -36,8 +36,8 @@ class _FizzGameState extends State<FizzGame> {
                       width: double.infinity,
                       height: 70,
                       child: Container(
-                        margin: const EdgeInsets.only(
-                            top: 10, left: 10, right: 20),
+                        margin:
+                            const EdgeInsets.only(top: 10, left: 10, right: 20),
                         decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -47,8 +47,7 @@ class _FizzGameState extends State<FizzGame> {
                               bottomRight: Radius.circular(30)),
                         ),
                         child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Column(
                               children: const [
@@ -57,8 +56,7 @@ class _FizzGameState extends State<FizzGame> {
                                   child: Text("ID: F202309251301",
                                       style: TextStyle(
                                           color: Colors.teal,
-                                          fontWeight:
-                                          FontWeight.bold,
+                                          fontWeight: FontWeight.bold,
                                           fontSize: 8)),
                                 ),
                                 Icon(
@@ -70,15 +68,12 @@ class _FizzGameState extends State<FizzGame> {
                             ),
                             gameNameSlogan("FIZZ", "5:00 Min Match"),
                             Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding:
-                                  const EdgeInsets.all(3.0),
+                                  padding: const EdgeInsets.all(3.0),
                                   child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       timerUI("C"),
                                       timerUI("O"),
@@ -96,53 +91,42 @@ class _FizzGameState extends State<FizzGame> {
                                 Row(
                                   children: [
                                     Container(
-                                      padding:
-                                      const EdgeInsets.only(
-                                          left: 5,
-                                          right: 5),
-
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
                                       decoration: BoxDecoration(
                                           color: Colors.teal,
                                           borderRadius:
-                                          BorderRadius
-                                              .circular(5)),
+                                              BorderRadius.circular(5)),
                                       child: const Center(
                                           child: Text(
-                                            "05",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontSize: 22),
-                                          )),
+                                        "05",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22),
+                                      )),
                                     ),
                                     const Text(
                                       ":",
                                       style: TextStyle(
                                           fontSize: 22,
-                                          fontWeight:
-                                          FontWeight.bold),
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     Container(
-                                      padding:
-                                      const EdgeInsets.only(
-                                          left: 5,
-                                          right: 5),
-
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
                                       decoration: BoxDecoration(
                                           color: Colors.teal,
                                           borderRadius:
-                                          BorderRadius
-                                              .circular(5)),
+                                              BorderRadius.circular(5)),
                                       child: const Center(
                                           child: Text(
-                                            "00",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontSize: 22),
-                                          )),
+                                        "00",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22),
+                                      )),
                                     ),
                                   ],
                                 ),
@@ -169,19 +153,15 @@ class _FizzGameState extends State<FizzGame> {
                               color: Colors.teal[100],
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-                                      bottomRight:
-                                      Radius.circular(20),
-                                      bottomLeft:
-                                      Radius.circular(20))),
+                                      bottomRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 45, vertical: 1),
                                 decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                        bottomRight:
-                                        Radius.circular(20),
-                                        bottomLeft:
-                                        Radius.circular(20))),
+                                        bottomRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20))),
                                 child: const Text(
                                   "Duo",
                                   style: TextStyle(
@@ -191,38 +171,38 @@ class _FizzGameState extends State<FizzGame> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18, right: 18),
+                              padding:
+                                  const EdgeInsets.only(left: 18, right: 18),
                               child: Row(
                                 children: [
                                   Expanded(
                                       child: Container(
-                                        padding:
-                                        const EdgeInsets.all(2),
-                                        height: 50,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton
-                                                .styleFrom(
-                                                backgroundColor:
-                                                Colors.red,
-                                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(80)))),
-                                            onPressed: () {},
-                                            child: const Text("Red")),
-                                      )),
+                                    padding: const EdgeInsets.all(2),
+                                    height: 50,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(80)))),
+                                        onPressed: () {},
+                                        child: const Text("Red")),
+                                  )),
                                   Expanded(
                                       child: Container(
-                                        padding:
-                                        const EdgeInsets.all(2),
-                                        height: 50,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton
-                                                .styleFrom(
-                                                backgroundColor:
-                                                Colors.green,
-                                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(80)))),
-                                            onPressed: () {},
-                                            child: const Text("Green")),
-                                      ))
+                                    padding: const EdgeInsets.all(2),
+                                    height: 50,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.green,
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(80)))),
+                                        onPressed: () {},
+                                        child: const Text("Green")),
+                                  ))
                                 ],
                               ),
                             )
@@ -244,19 +224,15 @@ class _FizzGameState extends State<FizzGame> {
                               color: Colors.teal[100],
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-                                      bottomRight:
-                                      Radius.circular(20),
-                                      bottomLeft:
-                                      Radius.circular(20))),
+                                      bottomRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 45, vertical: 1),
                                 decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                        bottomRight:
-                                        Radius.circular(20),
-                                        bottomLeft:
-                                        Radius.circular(20))),
+                                        bottomRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20))),
                                 child: const Text(
                                   "Trio",
                                   style: TextStyle(
@@ -266,60 +242,69 @@ class _FizzGameState extends State<FizzGame> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18, right: 18),
+                              padding:
+                                  const EdgeInsets.only(left: 18, right: 18),
                               child: Row(
                                 children: [
                                   Expanded(
                                       child: Container(
-                                        padding:
-                                        const EdgeInsets.all(2),
-                                        height: 50,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton
-                                                .styleFrom(
-                                              backgroundColor:
-                                              Colors.pink,
-                                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(80), bottomLeft:Radius.circular(80))),
-
-                                            ),
-                                            onPressed: () {},
-                                            child: const Text("Pink", style: TextStyle(fontWeight: FontWeight.bold, ),)),
-                                      )),
+                                    padding: const EdgeInsets.all(2),
+                                    height: 50,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.pink,
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(80),
+                                                  bottomLeft:
+                                                      Radius.circular(80))),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text(
+                                          "Pink",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )),
+                                  )),
                                   Expanded(
                                       child: Container(
-                                        padding:
-                                        const EdgeInsets.all(2),
-                                        height: 50,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton
-                                                .styleFrom(
-                                                backgroundColor:
-                                                Colors.blue),
-                                            onPressed: () {},
-                                            child: const Text("Blue",style: TextStyle(fontWeight: FontWeight.bold,))),
-                                      )),
+                                    padding: const EdgeInsets.all(2),
+                                    height: 50,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.blue),
+                                        onPressed: () {},
+                                        child: const Text("Blue",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))),
+                                  )),
                                   Expanded(
                                       child: Container(
-                                        padding:
-                                        const EdgeInsets.all(2),
-                                        height: 50,
-                                        child: ElevatedButton(
-                                            style: ElevatedButton
-                                                .styleFrom(
-                                                backgroundColor:
-                                                Colors.purple,
-                                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(80), bottomRight:Radius.circular(80) ))),
-                                            onPressed: () {},
-                                            child: const Text("Purple",style: TextStyle(fontWeight: FontWeight.bold, ))),
-                                      ))
+                                    padding: const EdgeInsets.all(2),
+                                    height: 50,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.purple,
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(80),
+                                                    bottomRight:
+                                                        Radius.circular(80)))),
+                                        onPressed: () {},
+                                        child: const Text("Purple",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ))),
+                                  ))
                                 ],
                               ),
                             )
                           ],
                         ),
                       ),
-
                     ),
                   ),
                   Expanded(
@@ -339,19 +324,15 @@ class _FizzGameState extends State<FizzGame> {
                               color: Colors.teal[100],
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
-                                      bottomRight:
-                                      Radius.circular(20),
-                                      bottomLeft:
-                                      Radius.circular(20))),
+                                      bottomRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20))),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 45, vertical: 1),
                                 decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
-                                        bottomRight:
-                                        Radius.circular(20),
-                                        bottomLeft:
-                                        Radius.circular(20))),
+                                        bottomRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20))),
                                 child: const Text(
                                   "Neo",
                                   style: TextStyle(
@@ -361,8 +342,8 @@ class _FizzGameState extends State<FizzGame> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 18, right: 18),
+                              padding:
+                                  const EdgeInsets.only(left: 18, right: 18),
                               child: Column(
                                 children: [
                                   SizedBox(
@@ -371,128 +352,160 @@ class _FizzGameState extends State<FizzGame> {
                                       children: [
                                         Expanded(
                                             child: Container(
-                                              padding:const EdgeInsets.all(2),
+                                          padding: const EdgeInsets.all(2),
 
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
-                                                      Colors.red,
-                                                      shape:  const RoundedRectangleBorder( borderRadius: BorderRadius.only( topLeft: Radius.circular(30)))
-                                                  ),
-                                                  onPressed: () {},
-                                                  child: const Text("1", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            )),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.red,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          30)))),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "1",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        )),
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
                                                       Colors.green),
-                                                  onPressed: () {},
-                                                  child: const Text("2", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            )),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "2",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        )),
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
                                                       Colors.purple),
-                                                  onPressed: () {},
-                                                  child: const Text("3", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            )),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "3",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        )),
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
-                                                      Colors.blue,
-                                                      shape:  const RoundedRectangleBorder( borderRadius: BorderRadius.only( topRight: Radius.circular(30)))
-                                                  ),
-
-                                                  onPressed: () {},
-                                                  child: const Text("4", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            ))
-
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.blue,
+                                                  shape: const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      30)))),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "4",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        ))
                                       ],
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 50
-                                    ,
+                                    height: 50,
                                     child: Row(
                                       children: [
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
-                                                      Colors.teal,
-                                                      shape:  const RoundedRectangleBorder( borderRadius: BorderRadius.only( bottomLeft: Radius.circular(30)))
-                                                  ),
-                                                  onPressed: () {},
-                                                  child: const Text("8", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            )),
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.teal,
+                                                  shape: const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      30)))),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "8",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        )),
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
                                                       Colors.brown),
-                                                  onPressed: () {},
-                                                  child:const Text("7", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            )),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "7",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        )),
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
-                                                      Colors.pink),
-                                                  onPressed: () {},
-                                                  child: const Text("6", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            )),
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.pink),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "6",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        )),
                                         Expanded(
                                             child: Container(
-                                              padding:
-                                              const EdgeInsets.all(2),
-                                              // height: 70,
-                                              child: ElevatedButton(
-                                                  style: ElevatedButton
-                                                      .styleFrom(
-                                                      backgroundColor:
-                                                      Colors.amber,
-                                                      shape:  const RoundedRectangleBorder( borderRadius: BorderRadius.only( bottomRight: Radius.circular(30)))
-
-                                                  ),
-                                                  onPressed: () {},
-                                                  child: const Text("5", style: TextStyle( fontWeight: FontWeight.bold, fontSize: 18),)),
-                                            ))
-
+                                          padding: const EdgeInsets.all(2),
+                                          // height: 70,
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.amber,
+                                                  shape: const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                              bottomRight: Radius
+                                                                  .circular(
+                                                                      30)))),
+                                              onPressed: () {},
+                                              child: const Text(
+                                                "5",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 18),
+                                              )),
+                                        ))
                                       ],
                                     ),
                                   ),
@@ -510,30 +523,29 @@ class _FizzGameState extends State<FizzGame> {
           ),
         ),
         Container(
-          height: 420,
+          height: 450,
           width: double.infinity,
-
-          decoration:   BoxDecoration(
-              color:Colors.white,
-              border: Border.all(color: Colors.teal[100]!, width: 2,  ),
-              borderRadius: const BorderRadius.only(topRight: Radius.circular(80), topLeft: Radius.circular(80))
-
-          ),
-          child:  Column(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.teal[100]!,
+                width: 2,
+              ),
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(80), topLeft: Radius.circular(80))),
+          child: Column(
             children: [
               // headingType("Novel Winner List"),
               gameNameSlogan("FIZZ", " The Winner List"),
               Container(
-                margin: const EdgeInsets.symmetric( horizontal: 12, vertical: 3),
-                padding:const EdgeInsets.symmetric( horizontal: 3, vertical: 5) ,
-
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
                 decoration: BoxDecoration(
                     color: Colors.teal[100],
-                    borderRadius: BorderRadius.circular(20)
-                ),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children:  [
+                  children: [
                     rowHeading("ID", flex: 2),
                     rowHeading("Duo"),
                     rowHeading("Trio"),
@@ -543,18 +555,20 @@ class _FizzGameState extends State<FizzGame> {
                 ),
               ),
               SizedBox(
-                height: 325,
+                height: 350,
                 child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 5),
                   itemCount: 10,
                   itemBuilder: (context, index) {
-
                     return winnerList(id: "F202309261800");
-                  },),
+                  },
+                ),
               )
             ],
           ),
         )
       ],
-    );;
+    );
+    ;
   }
 }

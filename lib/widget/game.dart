@@ -7,14 +7,14 @@ import 'package:velocity_x/velocity_x.dart';
 
 import 'gameNameSlogan.dart';
 
-class game extends StatefulWidget {
-  const game({Key? key}) : super(key: key);
+class Game extends StatefulWidget {
+  const Game({Key? key}) : super(key: key);
 
   @override
-  State<game> createState() => _gameState();
+  State<Game> createState() => _GameState();
 }
 
-class _gameState extends State<game> {
+class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     return

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:good_will/screens/HomeScreen.dart';
+import 'package:good_will/screens/NavigationPage.dart';
 import 'package:good_will/screens/SignupScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -115,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                                     await SharedPreferences.getInstance();
                                 pref.setString("user_id", id);
 
-                                context.nextAndRemoveUntilPage(HomeScreen());
+                                context.nextAndRemoveUntilPage(BottomNavigationBarExample());
                               } on FirebaseAuthException catch (e) {
                                 if (e.code == 'user-not-found') {
                                   context.showToast(
