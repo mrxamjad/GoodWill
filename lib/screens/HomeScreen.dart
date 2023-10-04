@@ -261,7 +261,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                if (recharge) RechargeWiget(),
+                if (recharge)
+                  Stack(
+                    children: [
+                      RechargeWiget(),
+                      Positioned(
+                          top: 20,
+                          right: 40,
+                          child: IconButton(
+                              onPressed: (){
+                                recharge=!recharge;
+                                setState(() {
+
+                                });
+                              }
+
+                              ,
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              )))
+                    ],
+                  ),
 
                 /// Game Play Design
                 SizedBox(

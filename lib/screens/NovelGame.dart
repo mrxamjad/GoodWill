@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:good_will/widget/jionGameDialog.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../widget/gameNameSlogan.dart';
@@ -186,7 +187,10 @@ class _NovelGameState extends State<NovelGame> {
                                                 borderRadius: BorderRadius.only(
                                                     topLeft:
                                                         Radius.circular(80)))),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          joinGameDialog(context);
+
+                                        },
                                         child: const Text("Red")),
                                   )),
                                   Expanded(

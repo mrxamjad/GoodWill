@@ -6,7 +6,8 @@ import 'package:good_will/data/Data.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class RechargeWiget extends StatefulWidget {
-  const RechargeWiget({super.key});
+
+   RechargeWiget({super.key});
 
   @override
   State<RechargeWiget> createState() => _RechargeWigetState();
@@ -27,30 +28,21 @@ class _RechargeWigetState extends State<RechargeWiget> {
           borderRadius: BorderRadius.circular(30)),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              const Text(
-                "Recharge Details",
-                style: TextStyle(
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 26),
+          const SizedBox(
+            height: 50,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "Recharge Details",
+                  style: TextStyle(
+                      color: Colors.teal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 26),
+                ),
               ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        recharge = false;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.cancel,
-                      color: Colors.red,
-                    )),
-              ),
-            ],
+            ),
           ),
           Container(
             decoration:
@@ -139,15 +131,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
               width: 100,
               child: Column(
                 children: [
-                  const Padding(
-                    padding:
-                        EdgeInsets.only(bottom: 15, left: 8, right: 8, top: 8),
-                    child: Text(
-                      "Enter Amount",
-                      style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
@@ -221,6 +205,9 @@ class _RechargeWigetState extends State<RechargeWiget> {
               onPressed: () {
                 setState(() {
                   DataClass.addRecharge(selectedOption * multiple);
+                  amountMultiple.clear();
+                  multiple=0;
+
                 });
               },
               child: const Text("Recharge"),

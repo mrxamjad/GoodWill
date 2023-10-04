@@ -5,6 +5,7 @@ import 'package:good_will/screens/WithdrawTab.dart';
 import 'package:good_will/widget/diplayAmount.dart';
 import 'package:good_will/widget/pageBackground.dart';
 import 'package:good_will/widget/rechargeWidget.dart';
+import 'package:good_will/widget/withdrawalWidget.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen> {
   bool recharge = false;
+  bool withdraw=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
                   child: SizedBox(
-                    height: 200,
+                    height: 230,
                     width: double.infinity,
                     child: Card(
                       color: Colors.teal,
@@ -74,6 +76,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                               onPressed: () {
                                                 setState(() {
                                                   recharge = !recharge;
+                                                  withdraw=false;
                                                 });
                                               },
                                               child: const Text(
@@ -102,10 +105,30 @@ class _WalletScreenState extends State<WalletScreen> {
                                       title: "Withdraw Pending",
                                       amount: "1000",
                                       amountColor: Colors.white,
-                                      amountBgColor: Colors.red),
+                                      amountBgColor: Colors.amber),
                                 ],
                               )
                             ],
+
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: SizedBox(
+                              height: 25,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.purple,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only( topRight: Radius.circular(30),topLeft: Radius.circular(30),)
+                                  )
+                                ),
+                                  onPressed: (){
+                                  setState(() {
+                                    withdraw=!withdraw;
+                                    recharge=false;
+                                  });
+                                  }, child: Text("Withdraw")),
+                            ),
                           )
                         ],
                       ),
@@ -115,7 +138,54 @@ class _WalletScreenState extends State<WalletScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                if (recharge) const RechargeWiget(),
+                if (recharge)  
+                  Stack(
+                    children: [
+                      RechargeWiget(
+                ),
+                      Positioned(
+                        top: 20,
+                          right: 40,
+                          child: IconButton(
+                          onPressed: (){
+                            recharge=!recharge;
+
+                            setState(() {
+
+                            });
+                          }
+
+                          ,
+                          icon: const Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                          )))
+                    ],
+                  ),
+                if (withdraw)
+                  Stack(
+                    children: [
+                      withdrawalWidget(
+                      ),
+                      Positioned(
+                          top: 20,
+                          right: 40,
+                          child: IconButton(
+                              onPressed: (){
+                                withdraw=!withdraw;
+
+                                setState(() {
+
+                                });
+                              }
+
+                              ,
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              )))
+                    ],
+                  ),
                 SizedBox(
                   height: 600,
                   child: DefaultTabController(
