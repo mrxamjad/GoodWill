@@ -3,25 +3,26 @@ import 'package:flutter/material.dart';
 
 Container paymentTransferCard(
     {String amount = "0",
-      bool isRecharge=false,
-    String paymentStatus = "Pending",
+    bool isRecharge = false,
+    String paymentStatus = "pending",
     String pMethod = "PayTM",
     String pAccount = "XXXXXXXX253",
-      String TID="1212154134412",
+    String TID = "1212154134412",
     String date = "24-Sep-2023"}) {
-  Color pColor=Colors.white;
-  if(paymentStatus=="Pending") pColor=Colors.orange[400]!;
-  if(paymentStatus=="Success") pColor=Colors.lightGreen;
+  Color pColor = Colors.white;
+  if (paymentStatus == "pending" || paymentStatus == "Pending")
+    pColor = Colors.orange[400]!;
+  if (paymentStatus == "success" || paymentStatus == "Success")
+    pColor = Colors.lightGreen;
 
   return Container(
     height: 100,
     margin: const EdgeInsets.all(5),
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(30),
-      border: Border.all( width: 0.5, color: Colors.teal)
-    ),
-
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(width: 0.5, color: Colors.teal)),
     child: Column(
       children: [
         Expanded(
@@ -36,7 +37,7 @@ Container paymentTransferCard(
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: Text(
-                      isRecharge?"By:": "To:",
+                      isRecharge ? "By:" : "To:",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey[600],
@@ -52,26 +53,40 @@ Container paymentTransferCard(
                       children: [
                         Expanded(
                             child: Text(
-                              pMethod,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            )),
+                          pMethod,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        )),
                         Expanded(
                             child: Text(
-                              pAccount,
-                              style: TextStyle(color: Colors.grey[500], fontSize: 10),
-                            ))
+                          pAccount,
+                          style:
+                              TextStyle(color: Colors.grey[500], fontSize: 10),
+                        ))
                       ],
                     ),
                   ),
                 ],
               ),
-
-                Align(
-                 alignment: Alignment.topRight,
-                   child: Text("TID: $TID", style: const TextStyle( color: Colors.teal, fontSize: 10,  fontWeight: FontWeight.bold),))
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.teal[50]
+                    ),
+                    child: Text(
+                      "TID: $TID",
+                      style: const TextStyle(
+                          color: Colors.teal,
+                          fontSize: 8,
+                        fontStyle: FontStyle.italic
+                          ),
+                    ),
+                  ))
             ],
           ),
         ),
@@ -85,7 +100,7 @@ Container paymentTransferCard(
                   padding: const EdgeInsets.only(right: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children:  [
+                    children: [
                       const Text(" Amount: ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -93,23 +108,26 @@ Container paymentTransferCard(
                               fontStyle: FontStyle.normal)),
                       Text(
                         " ₹ $amount",
-                        style:
-                            const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 22),
                       ),
                     ],
                   ),
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
-                  margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                   decoration: BoxDecoration(
-                      color: pColor,
-                      borderRadius: BorderRadius.circular(30)),
+                      color: pColor, borderRadius: BorderRadius.circular(30)),
                   child: Text(
-                  paymentStatus,
+                    paymentStatus,
                     style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic),
                   ))
             ],
           ),

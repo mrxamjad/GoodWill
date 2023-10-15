@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:good_will/data/Data.dart';
+import 'package:good_will/firebase/FirebaseService.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class RechargeWiget extends StatefulWidget {
@@ -204,7 +205,13 @@ class _RechargeWigetState extends State<RechargeWiget> {
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
                 setState(() {
-                  DataClass.addRecharge(selectedOption * multiple);
+
+
+                  // FirebaseService.updateRecharge(DataClass.userKey,selectedOption * multiple);
+                  FirebaseService.addRechargeHistory(DataClass.userKey,selectedOption * multiple , 'UPI', "2121212121", "", "").catchError((){
+                    context.showToast(msg: "Error recharge upadte");
+                  });
+
                   amountMultiple.clear();
                   multiple=0;
 

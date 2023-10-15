@@ -1,7 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../Constants/FirebaseKey.dart';
+import '../firebase/FirebaseService.dart';
+import '../methods/changeMatchId.dart';
+import '../methods/firstLatterCapital.dart';
+import '../methods/toDigit.dart';
 import '../widget/gameNameSlogan.dart';
+import '../widget/jionGameDialog.dart';
 import '../widget/rowHeading.dart';
 import '../widget/timerUI.dart';
 import '../widget/winnerList.dart';
@@ -14,6 +22,12 @@ class HeroGame extends StatefulWidget {
 }
 
 class _HeroGameState extends State<HeroGame> {
+  StreamController secondController = StreamController();
+  StreamController minuteController = StreamController();
+  String startDate = "";
+  int remainTime = 0;
+  bool allowButton = true;
+  String matchId = "";
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,16 +64,35 @@ class _HeroGameState extends State<HeroGame> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Column(
-                              children: const [
+                              children: [
                                 Padding(
-                                  padding: EdgeInsets.all(3.0),
-                                  child: Text("ID: H202309251301",
-                                      style: TextStyle(
-                                          color: Colors.teal,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 8)),
-                                ),
-                                Icon(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: StreamBuilder(
+                                        stream: FirebaseService.currentMatchRef
+                                            .doc("hero")
+                                            .snapshots(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            var data = snapshot.data;
+                                            matchId = data![FirebaseKey.duoId]
+                                                .toString();
+                                            var part = data[FirebaseKey.duoId]
+                                                .toString()
+                                                .substring(2);
+                                            return Text("ID: H$part",
+                                                style: const TextStyle(
+                                                    color: Colors.teal,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 8));
+                                          } else {
+                                            return const Text("ID: --:--",
+                                                style: TextStyle(
+                                                    color: Colors.teal,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 8));
+                                          }
+                                        })),
+                                const Icon(
                                   Icons.flag,
                                   color: Colors.teal,
                                   size: 32,
@@ -88,48 +121,117 @@ class _HeroGameState extends State<HeroGame> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      decoration: BoxDecoration(
-                                          color: Colors.teal,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: const Center(
-                                          child: Text(
-                                        "60",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22),
-                                      )),
-                                    ),
-                                    const Text(
-                                      ":",
-                                      style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      decoration: BoxDecoration(
-                                          color: Colors.teal,
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      child: const Center(
-                                          child: Text(
-                                        "00",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22),
-                                      )),
-                                    ),
-                                  ],
-                                ),
+                                StreamBuilder(
+                                    stream: FirebaseService.currentMatchRef
+                                        .doc("fizz")
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        var data = snapshot.data;
+                                        String time =
+                                            data![FirebaseKey.matchStartTime];
+
+                                        startDate = time;
+                                        DateTime startTime =
+                                            DateTime.parse(time);
+
+                                        var addedTime = startTime
+                                            .add(const Duration(seconds: 3600));
+                                        int leftTime = addedTime
+                                            .difference(DateTime.now())
+                                            .inSeconds;
+
+                                        int minute = 0;
+                                        int second = 0;
+
+                                        Timer.periodic(
+                                            const Duration(seconds: 1),
+                                            (timer) {
+                                          if (leftTime <= 0) {
+                                            timer.cancel();
+                                          } else {
+                                            leftTime--;
+                                            remainTime = leftTime;
+                                          }
+
+                                          if (leftTime > 30) {
+                                            allowButton = true;
+                                          } else {
+                                            allowButton = false;
+                                          }
+
+                                          minute = leftTime ~/ 60;
+                                          second = leftTime % 60;
+
+                                          secondController.sink.add(second);
+                                          minuteController.sink.add(minute);
+                                        });
+                                        return Row(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5, right: 5),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.teal,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child: StreamBuilder(
+                                                      stream: minuteController
+                                                          .stream,
+                                                      builder:
+                                                          (context, spapshot) {
+                                                        return Text(
+                                                          toDigit(minute),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 22),
+                                                        );
+                                                      })),
+                                            ),
+                                            const Text(
+                                              ":",
+                                              style: TextStyle(
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5, right: 5),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.teal,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              child: Center(
+                                                  child: StreamBuilder(
+                                                      stream: secondController
+                                                          .stream,
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        return Text(
+                                                          toDigit(second),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 22),
+                                                        );
+                                                      })),
+                                            ),
+                                          ],
+                                        );
+                                      } else {
+                                        return const SizedBox();
+                                      }
+                                    }),
                               ],
                             )
                           ],
@@ -186,7 +288,17 @@ class _HeroGameState extends State<HeroGame> {
                                                 borderRadius: BorderRadius.only(
                                                     topLeft:
                                                         Radius.circular(80)))),
-                                        onPressed: () {},
+                                        onPressed: allowButton
+                                            ? () {
+                                                joinGameDialog(
+                                                    context,
+                                                    "red",
+                                                    changeMatchIdType(
+                                                        matchId, "D"),
+                                                    startDate,
+                                                    remainTime);
+                                              }
+                                            : null,
                                         child: const Text("Red")),
                                   )),
                                   Expanded(
@@ -200,7 +312,17 @@ class _HeroGameState extends State<HeroGame> {
                                                 borderRadius: BorderRadius.only(
                                                     topRight:
                                                         Radius.circular(80)))),
-                                        onPressed: () {},
+                                        onPressed: allowButton
+                                            ? () {
+                                                joinGameDialog(
+                                                    context,
+                                                    "green",
+                                                    changeMatchIdType(
+                                                        matchId, "D"),
+                                                    startDate,
+                                                    remainTime);
+                                              }
+                                            : null,
                                         child: const Text("Green")),
                                   ))
                                 ],
@@ -259,7 +381,17 @@ class _HeroGameState extends State<HeroGame> {
                                                   bottomLeft:
                                                       Radius.circular(80))),
                                         ),
-                                        onPressed: () {},
+                                        onPressed: allowButton
+                                            ? () {
+                                                joinGameDialog(
+                                                    context,
+                                                    "pink",
+                                                    changeMatchIdType(
+                                                        matchId, "T"),
+                                                    startDate,
+                                                    remainTime);
+                                              }
+                                            : null,
                                         child: const Text(
                                           "Pink",
                                           style: TextStyle(
@@ -274,7 +406,17 @@ class _HeroGameState extends State<HeroGame> {
                                     child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.blue),
-                                        onPressed: () {},
+                                        onPressed: allowButton
+                                            ? () {
+                                                joinGameDialog(
+                                                    context,
+                                                    "blue",
+                                                    changeMatchIdType(
+                                                        matchId, "T"),
+                                                    startDate,
+                                                    remainTime);
+                                              }
+                                            : null,
                                         child: const Text("Blue",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -293,7 +435,17 @@ class _HeroGameState extends State<HeroGame> {
                                                         Radius.circular(80),
                                                     bottomRight:
                                                         Radius.circular(80)))),
-                                        onPressed: () {},
+                                        onPressed: allowButton
+                                            ? () {
+                                                joinGameDialog(
+                                                    context,
+                                                    "purple",
+                                                    changeMatchIdType(
+                                                        matchId, "T"),
+                                                    startDate,
+                                                    remainTime);
+                                              }
+                                            : null,
                                         child: const Text("Purple",
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -365,7 +517,17 @@ class _HeroGameState extends State<HeroGame> {
                                                                   topLeft: Radius
                                                                       .circular(
                                                                           30)))),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "1",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "1",
                                                 style: TextStyle(
@@ -381,7 +543,17 @@ class _HeroGameState extends State<HeroGame> {
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor:
                                                       Colors.green),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "2",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "2",
                                                 style: TextStyle(
@@ -397,7 +569,17 @@ class _HeroGameState extends State<HeroGame> {
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor:
                                                       Colors.purple),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "3",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "3",
                                                 style: TextStyle(
@@ -418,7 +600,17 @@ class _HeroGameState extends State<HeroGame> {
                                                               topRight: Radius
                                                                   .circular(
                                                                       30)))),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "4",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "4",
                                                 style: TextStyle(
@@ -446,7 +638,17 @@ class _HeroGameState extends State<HeroGame> {
                                                               bottomLeft: Radius
                                                                   .circular(
                                                                       30)))),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "8",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "8",
                                                 style: TextStyle(
@@ -462,7 +664,17 @@ class _HeroGameState extends State<HeroGame> {
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor:
                                                       Colors.brown),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "7",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "7",
                                                 style: TextStyle(
@@ -477,7 +689,17 @@ class _HeroGameState extends State<HeroGame> {
                                           child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                   backgroundColor: Colors.pink),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "6",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "6",
                                                 style: TextStyle(
@@ -498,7 +720,17 @@ class _HeroGameState extends State<HeroGame> {
                                                               bottomRight: Radius
                                                                   .circular(
                                                                       30)))),
-                                              onPressed: () {},
+                                              onPressed: allowButton
+                                                  ? () {
+                                                      joinGameDialog(
+                                                          context,
+                                                          "5",
+                                                          changeMatchIdType(
+                                                              matchId, "N"),
+                                                          startDate,
+                                                          remainTime);
+                                                    }
+                                                  : null,
                                               child: const Text(
                                                 "5",
                                                 style: TextStyle(
@@ -547,23 +779,57 @@ class _HeroGameState extends State<HeroGame> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     rowHeading("ID", flex: 2),
-                    rowHeading("Duo"),
-                    rowHeading("Trio"),
-                    rowHeading("Neo"),
+                    rowHeading("Match"),
                     rowHeading("Winner"),
                   ],
                 ),
               ),
               SizedBox(
                 height: 350,
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(top: 5),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return winnerList(id: "H202309261800");
-                  },
-                ),
-              )
+                child: FutureBuilder(
+                    future: FirebaseService.heroMatchHistory(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var data = snapshot.data;
+                        List matchList = [];
+
+                        data!.docs.map((e) => matchList.add(e.data())).toList();
+                        if (matchList.isNotEmpty) {
+                          return ListView.builder(
+                            padding: const EdgeInsets.only(top: 5),
+                            itemCount: matchList.length,
+                            itemBuilder: (context, index) {
+                              return winnerList(
+                                  id: matchList[index][FirebaseKey.matchId],
+                                  matchType: capitalizeWord(
+                                      matchList[index][FirebaseKey.matchType]),
+                                  winner: matchList[index]
+                                              [FirebaseKey.matchWinner] ==
+                                          ""
+                                      ? "--:--"
+                                      : capitalizeWord(matchList[index]
+                                          [FirebaseKey.matchWinner]));
+                            },
+                          );
+                        } else {
+                          return const Center(
+                            child: Text(
+                              "No match history",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal),
+                            ),
+                          );
+                        }
+                      } else if (snapshot.hasError) {
+                        return const Text("--: Error :--");
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }),
+              ),
             ],
           ),
         )

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:good_will/Constants/FirebaseKey.dart';
+import 'package:good_will/data/Data.dart';
+import 'package:good_will/firebase/FirebaseService.dart';
 import 'package:good_will/screens/PendingWithdrawalTab.dart';
 import 'package:good_will/screens/RechargeTab.dart';
 import 'package:good_will/screens/WithdrawTab.dart';
@@ -28,113 +31,140 @@ class _WalletScreenState extends State<WalletScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
-                  child: SizedBox(
-                    height: 230,
-                    width: double.infinity,
-                    child: Card(
-                      color: Colors.teal,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(5.0),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                        width: 1, color: Colors.white)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "Available Balance".toUpperCase(),
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
+                StreamBuilder(
+                    stream: FirebaseService.userRef.doc(DataClass.userKey).collection(FirebaseKey.profile).doc(FirebaseKey.profileId).snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Center(
+                          child: SizedBox(height: 100,
+                            width: 100,
+                            child: Text("Error found"),),
+                        );
+                      }
+                      else if(snapshot.hasData){
+                        var data=snapshot.data!;
+                        return
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 70, left: 30, right: 30),
+                            child: SizedBox(
+                              height: 230,
+                              width: double.infinity,
+                              child: Card(
+                                color: Colors.teal,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Container(
+                                          margin: const EdgeInsets.all(5.0),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(30),
+                                              border: Border.all(
+                                                  width: 1, color: Colors.white)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "Available Balance".toUpperCase(),
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  " ₹ ${data[FirebaseKey.availableBalance]} ",
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 22,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                SizedBox(
+                                                    width: 90,
+                                                    height: 20,
+                                                    child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            backgroundColor: Colors.red),
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            recharge = !recharge;
+                                                            withdraw=false;
+                                                          });
+                                                        },
+                                                        child: const Text(
+                                                          "RECHARGE",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              color: Colors.white),
+                                                        )))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            displayAmount(
+                                                title: "Today Winning",
+                                                amount: "${data[FirebaseKey.totalWinning]}",
+                                                amountBgColor: Colors.green,
+                                                amountColor: Colors.white),
+                                            displayAmount(
+                                                title: "Total Winning", amount: "${data[FirebaseKey.totalWinning]}"),
+                                            displayAmount(
+                                                title: "Withdraw Pending",
+                                                amount: "${data[FirebaseKey.totalWinning]}",
+                                                amountColor: Colors.white,
+                                                amountBgColor: Colors.amber),
+                                          ],
+                                        )
+                                      ],
+
+                                    ),
+
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8),
+                                      child: SizedBox(
+                                        height: 25,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.purple,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only( topRight: Radius.circular(30),topLeft: Radius.circular(30),)
+                                                )
+                                            ),
+                                            onPressed: (){
+                                              setState(() {
+                                                withdraw=!withdraw;
+                                                recharge=false;
+                                              });
+                                            }, child: Text("Withdraw")),
                                       ),
-                                      const Text(
-                                        " ₹ 5000 ",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(
-                                          width: 90,
-                                          height: 20,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.red),
-                                              onPressed: () {
-                                                setState(() {
-                                                  recharge = !recharge;
-                                                  withdraw=false;
-                                                });
-                                              },
-                                              child: const Text(
-                                                "RECHARGE",
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: Colors.white),
-                                              )))
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  displayAmount(
-                                      title: "Today Winning",
-                                      amount: "1000",
-                                      amountBgColor: Colors.green,
-                                      amountColor: Colors.white),
-                                  displayAmount(
-                                      title: "Total Winning", amount: "3000"),
-                                  displayAmount(
-                                      title: "Withdraw Pending",
-                                      amount: "1000",
-                                      amountColor: Colors.white,
-                                      amountBgColor: Colors.amber),
-                                ],
-                              )
-                            ],
-
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: SizedBox(
-                              height: 25,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.purple,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only( topRight: Radius.circular(30),topLeft: Radius.circular(30),)
-                                  )
-                                ),
-                                  onPressed: (){
-                                  setState(() {
-                                    withdraw=!withdraw;
-                                    recharge=false;
-                                  });
-                                  }, child: Text("Withdraw")),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+                          ) ;
+
+                      }
+                      else {
+                        return const Center(
+                          child: SizedBox(height: 100,
+                            width: 100,
+                            child: CircularProgressIndicator(),),
+                        );
+                      }
+                    }
                 ),
+
                 const SizedBox(
                   height: 10,
                 ),
@@ -195,11 +225,11 @@ class _WalletScreenState extends State<WalletScreen> {
                         backgroundColor: Colors.teal[100],
                         // foregroundColor: Colors.teal,
 
-                        toolbarHeight: 20,
+                        toolbarHeight: 40,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30)),
                         flexibleSpace: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TabBar(
                               labelColor: Colors.white,

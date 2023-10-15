@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:good_will/Constants/DataKey.dart';
 import 'package:good_will/backend/SharedPref.dart';
+import 'package:good_will/data/Data.dart';
 import 'package:good_will/screens/HomeScreen.dart';
 import 'package:good_will/screens/NavigationPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,26 +21,30 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  var userId;
+  String userId="";
 
   void setUser() async {
-    userId = await SharedPref.getUser();
+    SharedPreferences pref= await SharedPreferences.getInstance();
+    try{
+      userId = pref.getString(DataKey.userId)!;
+      DataClass.userKey=userId;
+    }catch(e){
+      print('Error in iinitializing SharedPregerences');
+
+
+    }
     print("SharedPref: UserId $userId");
   }
 
   @override
   void initState() {
     // TODO: implement initState
+    setUser();
+    print("User is in init state" + userId.toString());
     super.initState();
-    // setUser();
-    // print("User is in init state"+userId.toString());
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // userId= await SharedPref.getUser();
-      Timer.run(() {});
-      setUser();
-      print("User is in init state" + userId.toString());
-    });
+
+
   }
 
   @override
@@ -46,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return AnimatedSplashScreen(
       splash: 'assets/logo1.png',
       nextScreen:
-          userId == null ? LoginScreen() : BottomNavigationBarExampleApp(),
+          userId.isEmptyOrNull ? LoginScreen() : BottomNavigationBarExampleApp(),
       splashTransition: SplashTransition.rotationTransition,
       // pageTransitionType: PageTransitionType.,
     );

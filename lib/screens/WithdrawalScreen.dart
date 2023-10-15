@@ -8,10 +8,10 @@ class WithdrawalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Withdrawal History"),
+        title: const Text("Withdrawal History"),
         centerTitle: true,
       ),
-      body: WithdrawTab(),
+      body: const WithdrawTab(),
     );
   }
 }

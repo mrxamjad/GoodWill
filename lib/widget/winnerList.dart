@@ -1,15 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:good_will/backend/getColorByName.dart';
 import 'package:good_will/widget/rowHeading.dart';
 
-Container winnerList({
-  String id = "ID",
-  String duo = "red",
-  String trio = "purple",
-  String neo = "blue",
-  String totalWinner = "100",
-}) {
+Container winnerList(
+    {String id = "ID", String winner = "", String matchType = ""}) {
   return Container(
     height: 70,
     margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -26,11 +20,8 @@ Container winnerList({
             textColor: Colors.teal,
             bgColor: Colors.white,
             fontSize: 10),
-        rowHeading(duo, bgColor: getColorByName(duo), fontSize: 11),
-        rowHeading(trio, bgColor: getColorByName(trio), fontSize: 11),
-        rowHeading(neo, bgColor: getColorByName(neo), fontSize: 11),
-        rowHeading("₹$totalWinner",
-            textColor: Colors.teal, bgColor: Colors.white, fontSize: 10),
+        rowHeading(matchType, bgColor: getColorByName(""), fontSize: 11),
+        rowHeading(winner, bgColor: getColorByName(winner), fontSize: 11),
       ],
     ),
   );

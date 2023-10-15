@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:good_will/Constants/FirebaseKey.dart';
+import 'package:good_will/data/Data.dart';
+import 'package:good_will/firebase/FirebaseService.dart';
 
 import 'package:good_will/screens/BankDetailsScreen.dart';
 
@@ -18,7 +21,7 @@ import '../widget/pageBackground.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
-  String? name = "Amjad Ali";
+  // String? name = "Amjad Ali";
 
   @override
   Widget build(BuildContext context) {
@@ -35,56 +38,79 @@ class ProfileScreen extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: Card(
-                    color: Colors.grey[200],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: BorderSide(width: 0.5, color: Colors.teal)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.teal,
-                          child: Text(
-                            name.isEmptyOrNull
-                                ? "N"
-                                : name!.substring(0, 1).toUpperCase(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 63,
-                                color: Colors.white),
+                FutureBuilder(
+                    future: FirebaseService.userRef
+                        .doc(DataClass.userKey)
+                        .collection(FirebaseKey.profile)
+                        .doc(FirebaseKey.profileId)
+                        .get(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Center(
+                          child: Text("Error in loading"),
+                        );
+                      } else if (snapshot.hasData) {
+                        var data = snapshot.data;
+                        return SizedBox(
+                          height: 200,
+                          width: double.infinity,
+                          child: Card(
+                            color: Colors.grey[200],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                side: const BorderSide(
+                                    width: 0.5, color: Colors.teal)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.teal,
+                                  child: Text(
+                                    data![FirebaseKey.name]
+                                        .toString()
+                                        .substring(0, 1)
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 63,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                                Text(
+                                  data[FirebaseKey.name]
+                                      .toString()
+                                      .toUpperCase(),
+                                  style: const TextStyle(
+                                    color: Colors.teal,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  data[FirebaseKey.emailId],
+                                  style: const TextStyle(
+                                      color: Colors.teal,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                Text(
+                                  "[ ${data[FirebaseKey.userId]} ]",
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Text(
-                          name ?? "Amjad Ali",
-                          style: const TextStyle(
-                            color: Colors.teal,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const Text(
-                          "amjad@gmail.com",
-                          style: TextStyle(
-                              color: Colors.teal,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14),
-                        ),
-                        const Text(
-                          "[ UID: 2548426 ]",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }),
                 ProfileItem(
                     context: context,
                     widget: ProfileEdit(),
@@ -97,27 +123,27 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.comment_bank),
                 ProfileItem(
                     context: context,
-                    widget: WalletScreen(),
+                    widget: const WalletScreen(),
                     title: "Wallet",
                     icon: Icons.currency_rupee),
                 ProfileItem(
                     context: context,
-                    widget: RechargeScreen(),
+                    widget: const RechargeScreen(),
                     title: "Recharge",
                     icon: Icons.add),
                 ProfileItem(
                     context: context,
-                    widget: WithdrawalScreen(),
+                    widget: const WithdrawalScreen(),
                     title: "Withdrawal",
                     icon: Icons.monetization_on),
                 ProfileItem(
                     context: context,
-                    widget: PendingWithdrawalScreen(),
+                    widget: const PendingWithdrawalScreen(),
                     title: "Pending ",
                     icon: Icons.pending_actions),
                 ProfileItem(
                     context: context,
-                    widget: MatchScreen(),
+                    widget: const MatchScreen(),
                     title: "Winnings",
                     icon: Icons.wallet_giftcard),
                 // ProfileItem(
