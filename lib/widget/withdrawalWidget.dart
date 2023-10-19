@@ -76,19 +76,18 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                       onChanged: (value) {
                         try {
                           if (value.isNotEmptyAndNotNull) {
-
+                            amount = int.parse(value);
                             setState(() {
                               amount = int.parse(value);
-
                             });
                           } else {
                             setState(() {
-                              amount=0;
+                              amount = 0;
                             });
                           }
                         } catch (e) {
                           setState(() {
-                            // multiple = 0;
+                            amount = 0;
                           });
                           context.showToast(
                               msg: "Wrong value ",
@@ -378,7 +377,7 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                       }
 
                     }else{
-                      context.showToast(msg: "Enter amount at least 10 and more..", bgColor: Colors.red, textColor: Colors.white, position: VxToastPosition.top);
+                      context.showToast(msg: "Please enter a valid amount..", bgColor: Colors.red, textColor: Colors.white, position: VxToastPosition.top);
 
 
                     }

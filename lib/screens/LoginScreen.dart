@@ -1,16 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:good_will/data/Data.dart';
-import 'package:good_will/screens/HomeScreen.dart';
+
 import 'package:good_will/screens/NavigationPage.dart';
 import 'package:good_will/screens/SignupScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+
+  LoginScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,18 +32,20 @@ class LoginScreen extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.only(top: 40),
               child: Align(
-                alignment: Alignment.topCenter,
-                  child: Image.asset('assets/login.jpg', height: 200, )),
+                  alignment: Alignment.topCenter,
+                  child: Image.asset(
+                    'assets/logo1.png',
+                    height: 300,
+                  )),
             ),
-            
             SizedBox(
               height: 800,
               child: Form(
                 key: _formKey,
                 child: Container(
-                  padding: const EdgeInsets.only( top: 100),
+                  padding: const EdgeInsets.only(top: 150),
                   height: MediaQuery.of(context).size.height,
                   width: double.infinity,
                   child: Column(
@@ -58,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 20,
                               ),
                               Column(
@@ -72,17 +77,51 @@ class LoginScreen extends StatelessWidget {
                                       color: Colors.teal,
                                     ),
                                   ),
-                                  Text(
-                                    " Login with your credential",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey[700],
-                                      fontWeight: FontWeight.bold
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 45),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        border: Border.all(
+                                            color: Colors.black38, width: 0.2)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Text(
+                                          " Login ",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "with ",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.green,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "your ",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.pink,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Text(
+                                          "credential",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.purple,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               )
                             ],
@@ -103,9 +142,10 @@ class LoginScreen extends StatelessWidget {
                               // context.nextPage(HomeScreen());
                             },
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
                               child: Container(
-                                padding: EdgeInsets.only(top: 3, left: 3),
+                                padding: const EdgeInsets.only(top: 3, left: 3),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(40),
                                     border: const Border(
@@ -119,26 +159,29 @@ class LoginScreen extends StatelessWidget {
                                   onPressed: () async {
                                     if (_formKey.currentState!.validate()) {
                                       try {
-                                        final credential = await FirebaseAuth.instance
+                                        final credential = await FirebaseAuth
+                                            .instance
                                             .signInWithEmailAndPassword(
                                                 email: emailController.text,
                                                 password: passController.text);
                                         User? user = credential.user;
                                         String id = user!.uid;
-                                        print("User Id : $id");
 
                                         //set user key to DataClass
-                                        DataClass.userKey=id;
+                                        DataClass.userKey = id;
 
                                         SharedPreferences pref =
-                                            await SharedPreferences.getInstance();
+                                            await SharedPreferences
+                                                .getInstance();
                                         pref.setString("user_id", id);
 
-                                        context.nextAndRemoveUntilPage(BottomNavigationBarExample());
+                                        context.nextAndRemoveUntilPage(
+                                            const BottomNavigationBarExample());
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'user-not-found') {
                                           context.showToast(
-                                              msg: "No user found for that email.",
+                                              msg:
+                                                  "No user found for that email.",
                                               bgColor: Colors.red,
                                               textColor: Colors.white,
                                               position: VxToastPosition.top);
@@ -179,7 +222,12 @@ class LoginScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                               Text("Don't have an account?", style: TextStyle( fontWeight: FontWeight.bold, color: Colors.grey[700]!),),
+                              Text(
+                                "Don't have an account?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[700]!),
+                              ),
                               InkWell(
                                 onTap: () {
                                   context.nextPage(SignupScreen());

@@ -19,19 +19,25 @@ TextButton logoutWidget(BuildContext context) {
                   clipBehavior: Clip.none,
                   children: [
                     const Positioned(
-                      right: 90,
-
-                      top: -60,
+                        right: 90,
+                        top: -60,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
-                      radius: 50,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.red,
-                          radius:45,
-                          child: Text("Logout", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),)),
-                    )),
+                          radius: 50,
+                          child: CircleAvatar(
+                              backgroundColor: Colors.red,
+                              radius: 45,
+                              child: Text(
+                                "Logout",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              )),
+                        )),
                     Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 40),
+                      margin: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 20, top: 40),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.teal, width: 1)),
@@ -41,8 +47,8 @@ TextButton logoutWidget(BuildContext context) {
                           children: [
                             const Expanded(
                               child: Padding(
-                                padding:
-                                    EdgeInsets.only(top: 25, left: 25, right: 25),
+                                padding: EdgeInsets.only(
+                                    top: 25, left: 25, right: 25),
                                 child: Center(
                                   child: Text(
                                     "Are you sure want to logout?",
@@ -64,10 +70,11 @@ TextButton logoutWidget(BuildContext context) {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.green,
+                                              backgroundColor: Colors.green,
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(30))),
+                                                      BorderRadius.circular(
+                                                          30))),
                                           onPressed: () {
                                             context.pop();
                                           },
@@ -79,12 +86,14 @@ TextButton logoutWidget(BuildContext context) {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red,
+                                              backgroundColor: Colors.red,
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(30))),
+                                                      BorderRadius.circular(
+                                                          30))),
                                           onPressed: () async {
-                                            await FirebaseAuth.instance.signOut();
+                                            await FirebaseAuth.instance
+                                                .signOut();
                                             var s = await SharedPref.getUser();
                                             if (kDebugMode) {
                                               print("Before Logout: $s");
@@ -94,6 +103,7 @@ TextButton logoutWidget(BuildContext context) {
                                             if (kDebugMode) {
                                               print("After Logout: $s");
                                             }
+                                            // ignore: use_build_context_synchronously
                                             context.nextAndRemoveUntilPage(
                                                 LoginScreen());
                                           },
@@ -118,7 +128,10 @@ TextButton logoutWidget(BuildContext context) {
             color: Colors.white, borderRadius: BorderRadius.circular(30)),
         child: Row(
           children: const [
-            Icon(Icons.logout, color: Colors.teal,),
+            Icon(
+              Icons.logout,
+              color: Colors.teal,
+            ),
             Text(
               " Logout",
               style: TextStyle(

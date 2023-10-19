@@ -1,9 +1,16 @@
+
+
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:good_will/data/Data.dart';
 import 'package:good_will/firebase/FirebaseService.dart';
+import 'package:good_will/screens/QuantUPIPaymentScreen.dart';
+import 'package:quantupi/quantupi.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class RechargeWiget extends StatefulWidget {
@@ -18,10 +25,33 @@ class _RechargeWigetState extends State<RechargeWiget> {
   bool recharge = false;
   int selectedOption = 10;
   int multiple = 0;
+  String status="";
   TextEditingController amountMultiple = TextEditingController();
+
+  String appname = paymentappoptions[0];
+
+// method to initiate payment
+  Future<String> initiateTransaction({QuantUPIPaymentApps? app}) async {
+    Quantupi upi = Quantupi(
+      // 7321079853359@ybl'
+      //saifali73210@okaxis
+      receiverUpiId: 'saifali73210@okaxis',
+      receiverName: 'GoodWill',
+      transactionRefId: '251254235',
+      transactionNote: 'note: recharge will be credited shortly',
+      amount: 1.0,
+      appname: app,
+    );
+    String response = await upi.startTransaction();
+
+    return response;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+    bool isios = !kIsWeb && Platform.isIOS;
     return Container(
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -29,18 +59,23 @@ class _RechargeWigetState extends State<RechargeWiget> {
           borderRadius: BorderRadius.circular(30)),
       child: Column(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 50,
             child: Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.only(left: 20),
-                child: Text(
-                  "Recharge Details",
-                  style: TextStyle(
-                      color: Colors.teal,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 26),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Recharge Details",
+                      style: TextStyle(
+                          color: Colors.teal,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 26),
+                    ),
+                    Text("$status")
+                  ],
                 ),
               ),
             ),
@@ -204,18 +239,41 @@ class _RechargeWigetState extends State<RechargeWiget> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
-                setState(() {
+
+                try{
+                  if(selectedOption* int.parse(amountMultiple.text)>=10){
 
 
-                  // FirebaseService.updateRecharge(DataClass.userKey,selectedOption * multiple);
-                  FirebaseService.addRechargeHistory(DataClass.userKey,selectedOption * multiple , 'UPI', "2121212121", "", "").catchError((){
-                    context.showToast(msg: "Error recharge upadte");
-                  });
+                    // context.nextPage(QuantUpiScreen());
+                    setState(() async {
 
-                  amountMultiple.clear();
-                  multiple=0;
 
-                });
+                      // // FirebaseService.updateRecharge(DataClass.userKey,selectedOption * multiple);
+                      // FirebaseService.addRechargeHistory(DataClass.userKey,selectedOption * multiple , 'UPI', "2121212121", "", "").catchError((){
+                      //   context.showToast(msg: "Error recharge upadte");
+                      // });
+
+                      String value = await initiateTransaction(
+                        app: isios ? appoptiontoenum(appname) : null,
+                      );
+                      setState(() {
+                        status = value;
+                        print(status.toString());
+                      });
+                      context.showToast(msg: "$status");
+
+                      amountMultiple.clear();
+                      multiple=0;
+
+                    });
+
+                  }
+
+                } catch(r){
+                  context.showToast(msg: "Please enter a valid amount", bgColor:  Colors.red, position: VxToastPosition.top, textColor: Colors.white);
+
+                }
+
               },
               child: const Text("Recharge"),
             ),
@@ -224,4 +282,43 @@ class _RechargeWigetState extends State<RechargeWiget> {
       ),
     );
   }
+
+  QuantUPIPaymentApps appoptiontoenum(String appname) {
+    switch (appname) {
+      case 'Amazon Pay':
+        return QuantUPIPaymentApps.amazonpay;
+      case 'BHIMUPI':
+        return QuantUPIPaymentApps.bhimupi;
+      case 'Google Pay':
+        return QuantUPIPaymentApps.googlepay;
+      case 'Mi Pay':
+        return QuantUPIPaymentApps.mipay;
+      case 'Mobikwik':
+        return QuantUPIPaymentApps.mobikwik;
+      case 'Airtel Thanks':
+        return QuantUPIPaymentApps.myairtelupi;
+      case 'Paytm':
+        return QuantUPIPaymentApps.paytm;
+
+      case 'PhonePe':
+        return QuantUPIPaymentApps.phonepe;
+      case 'SBI PAY':
+        return QuantUPIPaymentApps.sbiupi;
+      default:
+        return QuantUPIPaymentApps.googlepay;
+    }
+  }
 }
+
+const List<String> paymentappoptions = [
+  'Amazon Pay',
+  'BHIMUPI',
+  'Google Pay',
+  'Mi Pay',
+  'Mobikwik',
+  'Airtel Thanks',
+  'Paytm',
+  'PhonePe',
+  'SBI PAY',
+];
+

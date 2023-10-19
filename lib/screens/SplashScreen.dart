@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:good_will/Constants/DataKey.dart';
-import 'package:good_will/backend/SharedPref.dart';
+
 import 'package:good_will/data/Data.dart';
-import 'package:good_will/screens/HomeScreen.dart';
+
 import 'package:good_will/screens/NavigationPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -21,41 +20,48 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String userId="";
+  String userId = "";
 
   void setUser() async {
-    SharedPreferences pref= await SharedPreferences.getInstance();
-    try{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    try {
       userId = pref.getString(DataKey.userId)!;
-      DataClass.userKey=userId;
-    }catch(e){
-      print('Error in iinitializing SharedPregerences');
+      DataClass.userKey = userId;
+      // ignore: empty_catches
+    } catch (e) {}
 
-
-    }
-    print("SharedPref: UserId $userId");
+    setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
-    setUser();
-    print("User is in init state" + userId.toString());
     super.initState();
-
-
-
+    setUser();
+    Timer(Duration(seconds: 5), () {
+      context.nextAndRemoveUntilPage(
+          userId == "" ? LoginScreen() : BottomNavigationBarExampleApp());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("User is in Build Conte" + userId.toString());
-    return AnimatedSplashScreen(
-      splash: 'assets/logo1.png',
-      nextScreen:
-          userId.isEmptyOrNull ? LoginScreen() : BottomNavigationBarExampleApp(),
-      splashTransition: SplashTransition.rotationTransition,
-      // pageTransitionType: PageTransitionType.,
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset("assets/logo1.png"),
+          SpinKitFadingCircle(
+            itemBuilder: (BuildContext context, int index) {
+              return DecoratedBox(
+                decoration: BoxDecoration(
+                  color: index.isEven ? Colors.red : Colors.green,
+                ),
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 }

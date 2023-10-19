@@ -1,6 +1,8 @@
 // ignore: file_names
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:good_will/widget/customSnackbar.dart';
+import 'package:good_will/widget/customToast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:good_will/Constants/DataKey.dart';
@@ -176,6 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         setState(() {
                                                           recharge = !recharge;
                                                         });
+                                                        customToast(
+                                                            context,
+                                                            "success",
+                                                            "Programm is ghhgghghgfgfhgfghfgfgfdgfdffdgfdgfgffdffgrunnig");
                                                       },
                                                       child: const Text(
                                                         "RECHARGE",

@@ -24,10 +24,37 @@ class EliteGame extends StatefulWidget {
 class _EliteGameState extends State<EliteGame> {
   StreamController secondController = StreamController();
   StreamController minuteController = StreamController();
+  StreamController allowButtonController = StreamController();
+
+  late Stream allowButtonStream;
+
+  Timer? timer;
   String startDate = "";
   int remainTime = 0;
   bool allowButton = true;
   String matchId = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+    allowButtonStream = allowButtonController.stream.asBroadcastStream();
+  }
+
+  @override
+  void dispose() {
+    allowButtonController.close();
+    secondController.close();
+    minuteController.close();
+
+    if (timer != null) {
+      if (timer!.isActive) {
+        timer!.cancel();
+      }
+    }
+
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -165,6 +192,8 @@ class _EliteGameState extends State<EliteGame> {
 
                                           secondController.sink.add(second);
                                           minuteController.sink.add(minute);
+                                          allowButtonController.sink
+                                              .add(allowButton);
                                         });
                                         return Row(
                                           children: [
@@ -237,517 +266,532 @@ class _EliteGameState extends State<EliteGame> {
                           ],
                         ),
                       )),
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        margin: const EdgeInsets.all(1),
-                        elevation: 1,
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(80))),
-                        child: Column(
-                          children: [
-                            Card(
-                              color: Colors.teal[100],
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20))),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 45, vertical: 1),
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20))),
-                                child: const Text(
-                                  "Duo",
-                                  style: TextStyle(
-                                      color: Colors.teal,
-                                      fontWeight: FontWeight.bold),
+                  StreamBuilder(
+                    stream: allowButtonStream,
+                    builder: (context, snapshot) {
+                      return Expanded(
+                        flex: 2,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            margin: const EdgeInsets.all(1),
+                            elevation: 1,
+                            color: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(80))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  color: Colors.teal[100],
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20))),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 45, vertical: 1),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20))),
+                                    child: const Text(
+                                      "Duo",
+                                      style: TextStyle(
+                                          color: Colors.teal,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 18, right: 18),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        height: 50,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red,
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(80)))),
+                                            onPressed: allowButton
+                                                ? () {
+                                                    joinGameDialog(
+                                                        context,
+                                                        "red",
+                                                        changeMatchIdType(
+                                                            matchId, "D"),
+                                                        startDate,
+                                                        remainTime);
+                                                  }
+                                                : null,
+                                            child: const Text("Red")),
+                                      )),
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        height: 50,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.green,
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(80)))),
+                                            onPressed: allowButton
+                                                ? () {
+                                                    joinGameDialog(
+                                                        context,
+                                                        "green",
+                                                        changeMatchIdType(
+                                                            matchId, "D"),
+                                                        startDate,
+                                                        remainTime);
+                                                  }
+                                                : null,
+                                            child: const Text("Green")),
+                                      ))
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 18, right: 18),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    height: 50,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.red,
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(80)))),
-                                        onPressed: allowButton
-                                            ? () {
-                                                joinGameDialog(
-                                                    context,
-                                                    "red",
-                                                    changeMatchIdType(
-                                                        matchId, "D"),
-                                                    startDate,
-                                                    remainTime);
-                                              }
-                                            : null,
-                                        child: const Text("Red")),
-                                  )),
-                                  Expanded(
-                                      child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    height: 50,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.green,
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(80)))),
-                                        onPressed: allowButton
-                                            ? () {
-                                                joinGameDialog(
-                                                    context,
-                                                    "green",
-                                                    changeMatchIdType(
-                                                        matchId, "D"),
-                                                    startDate,
-                                                    remainTime);
-                                              }
-                                            : null,
-                                        child: const Text("Green")),
-                                  ))
-                                ],
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        margin: const EdgeInsets.all(1),
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            Card(
-                              color: Colors.teal[100],
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20))),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 45, vertical: 1),
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20))),
-                                child: const Text(
-                                  "Trio",
-                                  style: TextStyle(
-                                      color: Colors.teal,
-                                      fontWeight: FontWeight.bold),
+                  StreamBuilder(
+                    stream: allowButtonStream,
+                    builder: (context, snapshot) {
+                      return Expanded(
+                        flex: 2,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            margin: const EdgeInsets.all(1),
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                Card(
+                                  color: Colors.teal[100],
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20))),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 45, vertical: 1),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20))),
+                                    child: const Text(
+                                      "Trio",
+                                      style: TextStyle(
+                                          color: Colors.teal,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 18, right: 18),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        height: 50,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.pink,
+                                              shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(80),
+                                                      bottomLeft:
+                                                          Radius.circular(80))),
+                                            ),
+                                            onPressed: allowButton
+                                                ? () {
+                                                    joinGameDialog(
+                                                        context,
+                                                        "pink",
+                                                        changeMatchIdType(
+                                                            matchId, "T"),
+                                                        startDate,
+                                                        remainTime);
+                                                  }
+                                                : null,
+                                            child: const Text(
+                                              "Pink",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )),
+                                      )),
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        height: 50,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.blue),
+                                            onPressed: allowButton
+                                                ? () {
+                                                    joinGameDialog(
+                                                        context,
+                                                        "blue",
+                                                        changeMatchIdType(
+                                                            matchId, "T"),
+                                                        startDate,
+                                                        remainTime);
+                                                  }
+                                                : null,
+                                            child: const Text("Blue",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ))),
+                                      )),
+                                      Expanded(
+                                          child: Container(
+                                        padding: const EdgeInsets.all(2),
+                                        height: 50,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.purple,
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only(
+                                                        topRight:
+                                                            Radius.circular(80),
+                                                        bottomRight:
+                                                            Radius.circular(80)))),
+                                            onPressed: allowButton
+                                                ? () {
+                                                    joinGameDialog(
+                                                        context,
+                                                        "purple",
+                                                        changeMatchIdType(
+                                                            matchId, "T"),
+                                                        startDate,
+                                                        remainTime);
+                                                  }
+                                                : null,
+                                            child: const Text("Purple",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ))),
+                                      ))
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 18, right: 18),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    height: 50,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.pink,
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(80),
-                                                  bottomLeft:
-                                                      Radius.circular(80))),
-                                        ),
-                                        onPressed: allowButton
-                                            ? () {
-                                                joinGameDialog(
-                                                    context,
-                                                    "pink",
-                                                    changeMatchIdType(
-                                                        matchId, "T"),
-                                                    startDate,
-                                                    remainTime);
-                                              }
-                                            : null,
-                                        child: const Text(
-                                          "Pink",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )),
-                                  )),
-                                  Expanded(
-                                      child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    height: 50,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.blue),
-                                        onPressed: allowButton
-                                            ? () {
-                                                joinGameDialog(
-                                                    context,
-                                                    "blue",
-                                                    changeMatchIdType(
-                                                        matchId, "T"),
-                                                    startDate,
-                                                    remainTime);
-                                              }
-                                            : null,
-                                        child: const Text("Blue",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))),
-                                  )),
-                                  Expanded(
-                                      child: Container(
-                                    padding: const EdgeInsets.all(2),
-                                    height: 50,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.purple,
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.only(
-                                                    topRight:
-                                                        Radius.circular(80),
-                                                    bottomRight:
-                                                        Radius.circular(80)))),
-                                        onPressed: allowButton
-                                            ? () {
-                                                joinGameDialog(
-                                                    context,
-                                                    "purple",
-                                                    changeMatchIdType(
-                                                        matchId, "T"),
-                                                    startDate,
-                                                    remainTime);
-                                              }
-                                            : null,
-                                        child: const Text("Purple",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            ))),
-                                  ))
-                                ],
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        margin: const EdgeInsets.all(1),
-                        color: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(80),
-                                bottomRight: Radius.circular(30))),
-                        child: Column(
-                          children: [
-                            Card(
-                              color: Colors.teal[100],
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20))),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 45, vertical: 1),
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20))),
-                                child: const Text(
-                                  "Neo",
-                                  style: TextStyle(
-                                      color: Colors.teal,
-                                      fontWeight: FontWeight.bold),
+                  StreamBuilder(
+                    stream: allowButtonStream,
+                    builder: (context, snapshot) {
+                      return Expanded(
+                        flex: 3,
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            margin: const EdgeInsets.all(1),
+                            color: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(30))),
+                            child: Column(
+                              children: [
+                                Card(
+                                  color: Colors.teal[100],
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20))),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 45, vertical: 1),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomRight: Radius.circular(20),
+                                            bottomLeft: Radius.circular(20))),
+                                    child: const Text(
+                                      "Neo",
+                                      style: TextStyle(
+                                          color: Colors.teal,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 18, right: 18),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 50,
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 18, right: 18),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 50,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
 
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.red,
-                                                  shape:
-                                                      const RoundedRectangleBorder(
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.red,
+                                                      shape:
+                                                          const RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              30)))),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "1",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "1",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            )),
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.green),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "2",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "2",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            )),
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.purple),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "3",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "3",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            )),
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.blue,
+                                                      shape: const RoundedRectangleBorder(
                                                           borderRadius:
                                                               BorderRadius.only(
-                                                                  topLeft: Radius
+                                                                  topRight: Radius
                                                                       .circular(
                                                                           30)))),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "1",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "1",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        )),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.green),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "2",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "2",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        )),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.purple),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "3",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "3",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        )),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.blue,
-                                                  shape: const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      30)))),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "4",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "4",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        ))
-                                      ],
-                                    ),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "4",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "4",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            ))
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 50,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.teal,
+                                                      shape: const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          30)))),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "8",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "8",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            )),
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.brown),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "7",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "7",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            )),
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.pink),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "6",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "6",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            )),
+                                            Expanded(
+                                                child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              // height: 70,
+                                              child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor: Colors.amber,
+                                                      shape: const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          30)))),
+                                                  onPressed: allowButton
+                                                      ? () {
+                                                          joinGameDialog(
+                                                              context,
+                                                              "5",
+                                                              changeMatchIdType(
+                                                                  matchId, "N"),
+                                                              startDate,
+                                                              remainTime);
+                                                        }
+                                                      : null,
+                                                  child: const Text(
+                                                    "5",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 18),
+                                                  )),
+                                            ))
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: 50,
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.teal,
-                                                  shape: const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              bottomLeft: Radius
-                                                                  .circular(
-                                                                      30)))),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "8",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "8",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        )),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.brown),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "7",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "7",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        )),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.pink),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "6",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "6",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        )),
-                                        Expanded(
-                                            child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          // height: 70,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  backgroundColor: Colors.amber,
-                                                  shape: const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              bottomRight: Radius
-                                                                  .circular(
-                                                                      30)))),
-                                              onPressed: allowButton
-                                                  ? () {
-                                                      joinGameDialog(
-                                                          context,
-                                                          "5",
-                                                          changeMatchIdType(
-                                                              matchId, "N"),
-                                                          startDate,
-                                                          remainTime);
-                                                    }
-                                                  : null,
-                                              child: const Text(
-                                                "5",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18),
-                                              )),
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }
                   ),
                 ],
               ),

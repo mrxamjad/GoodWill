@@ -1,0 +1,1 @@
+txnId=YBL70ad6fb3a44647539a4af43e9bacde11&txnRef=251254235&Status=Failed&responseCode=01 --problem vpa
