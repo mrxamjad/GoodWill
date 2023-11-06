@@ -1,15 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:good_will/screens/HomeScreen.dart';
 import 'package:good_will/screens/MatchScreen.dart';
 import 'package:good_will/screens/ProfileScreen.dart';
 import 'package:good_will/screens/WalletScreen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:velocity_x/velocity_x.dart';
-
-import '../backend/SharedPref.dart';
-import 'LoginScreen.dart';
 
 /// Flutter code sample for [BottomNavigationBar].
 
@@ -36,8 +30,6 @@ class BottomNavigationBarExample extends StatefulWidget {
 class _BottomNavigationBarExampleState
     extends State<BottomNavigationBarExample> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const WalletScreen(),

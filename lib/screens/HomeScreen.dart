@@ -1,7 +1,6 @@
 // ignore: file_names
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:good_will/widget/customSnackbar.dart';
 import 'package:good_will/widget/customToast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -217,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       child: Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .symmetric(
+                                                                .symmetric(
                                                                 horizontal: 18,
                                                                 vertical: 0),
                                                         decoration:
@@ -264,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       child: Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .symmetric(
+                                                                .symmetric(
                                                                 horizontal: 18,
                                                                 vertical: 0),
                                                         decoration: BoxDecoration(
@@ -301,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       child: Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                    .symmetric(
+                                                                .symmetric(
                                                                 horizontal: 22,
                                                                 vertical: 0),
                                                         decoration: BoxDecoration(

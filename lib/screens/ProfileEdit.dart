@@ -3,7 +3,6 @@ import 'package:good_will/Constants/FirebaseKey.dart';
 import 'package:good_will/data/Data.dart';
 import 'package:good_will/firebase/FirebaseService.dart';
 import 'package:good_will/widget/pageBackground.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class ProfileEdit extends StatefulWidget {
   ProfileEdit({Key? key}) : super(key: key);

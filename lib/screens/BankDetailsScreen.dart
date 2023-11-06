@@ -516,9 +516,7 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                                   labelStyle: TextStyle(color: Colors.teal),
                                 ),
                                 onChanged: (value) {
-                                  try {
-                                    int account = int.parse(value);
-                                  } catch (e) {
+                                  try {} catch (e) {
                                     context.showToast(
                                         msg: "A/C No. only can have number!",
                                         textColor: Colors.white,

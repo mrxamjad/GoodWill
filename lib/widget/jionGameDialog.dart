@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:good_will/backend/getColorByName.dart';
 import 'package:good_will/data/Data.dart';
 import 'package:good_will/firebase/FirebaseService.dart';
-import 'package:good_will/main.dart';
+
 import 'package:good_will/methods/firstLatterCapital.dart';
 import 'package:good_will/widget/gameNameSlogan.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -60,7 +60,7 @@ joinGameDialog(BuildContext context, String selected, String matchId,
       int selectedOption = 10;
       int multiple = 0;
       String timeToShow = "";
-      String nameToShow = "";
+
       TextEditingController amountMultiple = TextEditingController();
 
       if (category == "novel") {
@@ -79,10 +79,8 @@ joinGameDialog(BuildContext context, String selected, String matchId,
       return StatefulBuilder(builder: (context, state) {
         int minute = 0, second = 0;
         int availableAmount = 0;
-        Timer timerMain;
 
         Timer.periodic(Duration(seconds: 1), (timer) {
-          timerMain = timer;
           if (remainTime > 30) {
             remainTime--;
             minute = remainTime ~/ 60;
@@ -93,7 +91,7 @@ joinGameDialog(BuildContext context, String selected, String matchId,
           } else {
             if (timer.isActive) {
               timer.cancel();
-              context.pop();
+              Navigator.pop(context);
             }
           }
         });
@@ -187,7 +185,7 @@ joinGameDialog(BuildContext context, String selected, String matchId,
                             alignment: Alignment.topRight,
                             child: IconButton(
                               onPressed: () {
-                                context.pop();
+                                Navigator.pop(context);
                               },
                               icon: const Icon(Icons.cancel),
                               color: Colors.red,
@@ -526,7 +524,7 @@ joinGameDialog(BuildContext context, String selected, String matchId,
                                   bgColor: Colors.green,
                                   position: VxToastPosition.top);
 
-                              context.pop();
+                              Navigator.pop(context);
                             } else {
                               context.showToast(
                                   msg: "Please enter a valid amount..",

@@ -14,7 +14,6 @@ import 'package:good_will/screens/WalletScreen.dart';
 import 'package:good_will/screens/WithdrawalScreen.dart';
 import 'package:good_will/widget/ProfileItem.dart';
 import 'package:good_will/widget/logoutWidget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../widget/pageBackground.dart';
 

@@ -1,21 +1,12 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:good_will/data/Data.dart';
-import 'package:good_will/firebase/FirebaseService.dart';
-import 'package:good_will/screens/QuantUPIPaymentScreen.dart';
 import 'package:quantupi/quantupi.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class RechargeWiget extends StatefulWidget {
-
-   RechargeWiget({super.key});
+  RechargeWiget({super.key});
 
   @override
   State<RechargeWiget> createState() => _RechargeWigetState();
@@ -25,7 +16,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
   bool recharge = false;
   int selectedOption = 10;
   int multiple = 0;
-  String status="";
+  String status = "";
   TextEditingController amountMultiple = TextEditingController();
 
   String appname = paymentappoptions[0];
@@ -35,7 +26,8 @@ class _RechargeWigetState extends State<RechargeWiget> {
     Quantupi upi = Quantupi(
       // 7321079853359@ybl'
       //saifali73210@okaxis
-      receiverUpiId: 'saifali73210@okaxis',
+      //8001430576@fbpe
+      receiverUpiId: 'paytmqr17921z88hj@paytm',
       receiverName: 'GoodWill',
       transactionRefId: '251254235',
       transactionNote: 'note: recharge will be credited shortly',
@@ -46,8 +38,6 @@ class _RechargeWigetState extends State<RechargeWiget> {
 
     return response;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +157,6 @@ class _RechargeWigetState extends State<RechargeWiget> {
               width: 100,
               child: Column(
                 children: [
-
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
@@ -239,15 +228,10 @@ class _RechargeWigetState extends State<RechargeWiget> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
-
-                try{
-                  if(selectedOption* int.parse(amountMultiple.text)>=10){
-
-
+                try {
+                  if (selectedOption * int.parse(amountMultiple.text) >= 10) {
                     // context.nextPage(QuantUpiScreen());
                     setState(() async {
-
-
                       // // FirebaseService.updateRecharge(DataClass.userKey,selectedOption * multiple);
                       // FirebaseService.addRechargeHistory(DataClass.userKey,selectedOption * multiple , 'UPI', "2121212121", "", "").catchError((){
                       //   context.showToast(msg: "Error recharge upadte");
@@ -263,17 +247,16 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       context.showToast(msg: "$status");
 
                       amountMultiple.clear();
-                      multiple=0;
-
+                      multiple = 0;
                     });
-
                   }
-
-                } catch(r){
-                  context.showToast(msg: "Please enter a valid amount", bgColor:  Colors.red, position: VxToastPosition.top, textColor: Colors.white);
-
+                } catch (r) {
+                  context.showToast(
+                      msg: "Please enter a valid amount",
+                      bgColor: Colors.red,
+                      position: VxToastPosition.top,
+                      textColor: Colors.white);
                 }
-
               },
               child: const Text("Recharge"),
             ),
@@ -321,4 +304,3 @@ const List<String> paymentappoptions = [
   'PhonePe',
   'SBI PAY',
 ];
-

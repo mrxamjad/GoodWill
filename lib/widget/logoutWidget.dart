@@ -76,7 +76,7 @@ TextButton logoutWidget(BuildContext context) {
                                                       BorderRadius.circular(
                                                           30))),
                                           onPressed: () {
-                                            context.pop();
+                                            Navigator.pop(context);
                                           },
                                           child: Text("No")),
                                     ),
@@ -126,8 +126,8 @@ TextButton logoutWidget(BuildContext context) {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(30)),
-        child: Row(
-          children: const [
+        child: const Row(
+          children: [
             Icon(
               Icons.logout,
               color: Colors.teal,
