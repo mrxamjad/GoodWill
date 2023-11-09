@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:good_will/Constants/FirebaseKey.dart';
 import 'package:good_will/data/Data.dart';
 import 'package:good_will/firebase/FirebaseService.dart';
@@ -21,6 +23,24 @@ class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
   // String? name = "Amjad Ali";
+
+  Future<void> pay() async {
+    const platform = MethodChannel('com.sabpaisa.integration/native');
+    final List<Object?> result = await platform.invokeMethod('callSabPaisaSdk',
+        ["sabpaa", "lastn", "ftter@gmail.com", "7260004480", "30"]);
+
+    String txnStatus = result[0].toString();
+    String txnId = result[1].toString();
+
+    Fluttertoast.showToast(
+        msg: "$txnStatus TransactionID: $txnId",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +165,7 @@ class ProfileScreen extends StatelessWidget {
                     widget: const MatchScreen(),
                     title: "Winnings",
                     icon: Icons.wallet_giftcard),
+
                 // ProfileItem(
                 //     context: context,
                 //     widget: WalletScreen(),

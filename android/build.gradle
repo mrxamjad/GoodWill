@@ -1,10 +1,13 @@
 
 
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.9.20'
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io'
+            credentials { username 'jp_oshtn4lfqhsnjr688utjov34gq' }
+        }
     }
 
     dependencies {
@@ -19,6 +22,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io'
+            credentials { username 'jp_oshtn4lfqhsnjr688utjov34gq' }
+        }
     }
 }
 

@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         FontWeight.bold),
                                               ),
                                               SizedBox(
-                                                  width: 90,
+                                                  // width: 90,
                                                   height: 20,
                                                   child: ElevatedButton(
                                                       style: ElevatedButton

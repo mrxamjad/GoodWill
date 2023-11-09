@@ -67,3 +67,7 @@ android {
 flutter {
     source '../..'
 }
+
+dependencies {
+    implementation 'com.github.sabpaisa-android:sabpaisa:1.0.1'
+}

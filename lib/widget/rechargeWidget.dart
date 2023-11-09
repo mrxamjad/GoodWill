@@ -1,7 +1,6 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quantupi/quantupi.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -41,7 +40,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
 
   @override
   Widget build(BuildContext context) {
-    bool isios = !kIsWeb && Platform.isIOS;
+    // bool isios = !kIsWeb && Platform.isIOS;
     return Container(
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -237,11 +236,37 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       //   context.showToast(msg: "Error recharge upadte");
                       // });
 
-                      String value = await initiateTransaction(
-                        app: isios ? appoptiontoenum(appname) : null,
-                      );
+                      // String value = await initiateTransaction(
+                      //   app: isios ? appoptiontoenum(appname) : null,
+                      // );
+
+                      const platform =
+                          MethodChannel('com.sabpaisa.integration/native');
+                      final List<Object?> result =
+                          await platform.invokeMethod('callSabPaisaSdk', [
+                        "sabpaa",
+                        "lastn",
+                        "ftter@gmail.com",
+                        "7260004480",
+                        "${selectedOption * multiple}"
+                      ]);
+
+                      String txnStatus = result[0].toString();
+                      String txnId = result[1].toString();
+
+                      print("----------------------------------------------" +
+                          result[0].toString());
+
+                      Fluttertoast.showToast(
+                          msg: "${txnStatus}Transaction Id: $txnId",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                       setState(() {
-                        status = value;
+                        // status = value;
                         print(status.toString());
                       });
                       context.showToast(msg: "$status");
