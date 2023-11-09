@@ -25,7 +25,11 @@ class _MatchScreenState extends State<MatchScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.teal,
-          title: const Text("Games History"),
+          title: const Text(
+            "Games History",
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
           centerTitle: true,
         ),
         body: SizedBox(
@@ -65,7 +69,7 @@ class _MatchScreenState extends State<MatchScreen> {
                           }).toList();
                           if (dataList.isNotEmpty) {
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 50),
+                              padding: const EdgeInsets.only(bottom: 1),
                               child: ListView.builder(
                                 itemCount: dataList.length,
                                 itemBuilder: (context, index) {
@@ -137,7 +141,9 @@ class _MatchScreenState extends State<MatchScreen> {
                           }
                         } else {
                           return const Center(
-                              child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(
+                            color: Colors.teal,
+                          ));
                         }
                       })),
             ],

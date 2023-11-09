@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:good_will/data/Data.dart';
+import 'package:good_will/firebase/FirebaseService.dart';
+
+import 'package:good_will/widget/customToast.dart';
 import 'package:quantupi/quantupi.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -47,9 +50,10 @@ class _RechargeWigetState extends State<RechargeWiget> {
           border: Border.all(color: Colors.teal),
           borderRadius: BorderRadius.circular(30)),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 50,
+            // height: 40,
             child: Align(
               alignment: Alignment.centerLeft,
               child: Padding(
@@ -228,7 +232,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
                 try {
-                  if (selectedOption * int.parse(amountMultiple.text) >= 10) {
+                  if (selectedOption * multiple >= 10) {
                     // context.nextPage(QuantUpiScreen());
                     setState(() async {
                       // // FirebaseService.updateRecharge(DataClass.userKey,selectedOption * multiple);
@@ -239,6 +243,12 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       // String value = await initiateTransaction(
                       //   app: isios ? appoptiontoenum(appname) : null,
                       // );
+
+                      var data = FirebaseService.getUserInfo(DataClass.userKey);
+                      print(
+                          '-----------------------------------------------------');
+                      print(data);
+                      // print(data["phone"])
 
                       const platform =
                           MethodChannel('com.sabpaisa.integration/native');
@@ -254,22 +264,25 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       String txnStatus = result[0].toString();
                       String txnId = result[1].toString();
 
-                      print("----------------------------------------------" +
-                          result[0].toString());
+                      // ignore: use_build_context_synchronously
+                      customToast(
+                          context,
+                          txnStatus == "SUCCESS" ? "success" : "error",
+                          txnStatus == "SUCCESS"
+                              ? "Recharge sucessfully done"
+                              : "Recharge Failed!");
 
-                      Fluttertoast.showToast(
-                          msg: "${txnStatus}Transaction Id: $txnId",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                      setState(() {
-                        // status = value;
-                        print(status.toString());
-                      });
-                      context.showToast(msg: "$status");
+                      if (txnStatus == "SUCCESS") {
+                        await FirebaseService.addRechargeHistory(
+                            DataClass.userKey,
+                            txnId,
+                            selectedOption * multiple,
+                            "Payment Gatway",
+                            "",
+                            "",
+                            "");
+                      }
+                      setState(() {});
 
                       amountMultiple.clear();
                       multiple = 0;
@@ -283,7 +296,10 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       textColor: Colors.white);
                 }
               },
-              child: const Text("Recharge"),
+              child: const Text(
+                "Recharge",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ],

@@ -10,10 +10,10 @@ Expanded rowHeading(
   return Expanded(
       flex: flex,
       child: Container(
-          height: 40,
+          // height: 30,
           padding: const EdgeInsets.symmetric(
               // horizontal: 5,
-              vertical: 10),
+              vertical: 5),
           decoration: BoxDecoration(
               color: bgColor, borderRadius: BorderRadius.circular(30)),
           child: Center(

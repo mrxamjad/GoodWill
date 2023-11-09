@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 Container paymentTransferCard(
@@ -18,7 +17,7 @@ Container paymentTransferCard(
   return Container(
     height: 100,
     margin: const EdgeInsets.all(5),
-    padding: const EdgeInsets.all(10),
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
     decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
@@ -46,25 +45,26 @@ Container paymentTransferCard(
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                    ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                            child: Text(
+                        Text(
                           pMethod,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
-                        )),
-                        Expanded(
-                            child: Text(
-                          pAccount,
-                          style:
-                              TextStyle(color: Colors.grey[500], fontSize: 10),
-                        ))
+                        ),
+                        if (pAccount != "")
+                          Text(
+                            pAccount,
+                            style: TextStyle(
+                                color: Colors.grey[500], fontSize: 10),
+                          )
                       ],
                     ),
                   ),
@@ -73,18 +73,17 @@ Container paymentTransferCard(
               Align(
                   alignment: Alignment.topRight,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.teal[50]
-                    ),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.teal[50]),
                     child: Text(
                       "TID: $TID",
                       style: const TextStyle(
                           color: Colors.teal,
                           fontSize: 8,
-                        fontStyle: FontStyle.italic
-                          ),
+                          fontStyle: FontStyle.italic),
                     ),
                   ))
             ],
@@ -141,7 +140,7 @@ Container paymentTransferCard(
               children: [
                 Text(
                   date,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 10),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 8),
                 )
               ],
             ),

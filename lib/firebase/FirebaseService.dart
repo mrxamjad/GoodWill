@@ -115,6 +115,11 @@ class FirebaseService {
         toDigit(date.second);
     String tid = "W${uid.substring(0, 4).toUpperCase()}$id";
 
+    int intAmount = int.parse(amount);
+
+    await userRef.doc(uid).collection("profile").doc("profile_id").update(
+        {FirebaseKey.withdrawPending: FieldValue.increment(-intAmount)});
+
     await userRef
         .doc(uid)
         .collection(FirebaseKey.withdrawDetails)
@@ -152,16 +157,22 @@ class FirebaseService {
   }
 
 //Create recharge history
-  static Future addRechargeHistory(String uid, int amount, String paymentMethod,
-      String account, String? bankName, String? ifscCode) async {
-    DateTime date = DateTime.now();
-    String id = date.year.toString() +
-        toDigit(date.month) +
-        toDigit(date.day) +
-        toDigit(date.hour) +
-        toDigit(date.minute) +
-        toDigit(date.second);
-    String tid = "R${uid.substring(0, 4).toUpperCase()}$id";
+  static Future addRechargeHistory(
+      String uid,
+      String tid,
+      int amount,
+      String paymentMethod,
+      String account,
+      String? bankName,
+      String? ifscCode) async {
+    // DateTime date = DateTime.now();
+    // String id = date.year.toString() +
+    //     toDigit(date.month) +
+    //     toDigit(date.day) +
+    //     toDigit(date.hour) +
+    //     toDigit(date.minute) +
+    //     toDigit(date.second);
+    // String tid = "R${uid.substring(0, 4).toUpperCase()}$id";
 
     await userRef
         .doc(uid)
@@ -171,7 +182,7 @@ class FirebaseService {
       FirebaseKey.rechargeAmount: amount,
       FirebaseKey.rechargeId: tid,
       FirebaseKey.rechargeRequestTime: DateTime.now().toString(),
-      FirebaseKey.rechargeStatus: "success",
+      FirebaseKey.rechargeStatus: "pending",
       FirebaseKey.paymentMethod: paymentMethod,
       FirebaseKey.bankAccount: account,
       FirebaseKey.bankName: bankName ?? '',
@@ -351,5 +362,21 @@ class FirebaseService {
         )
         .limit(50)
         .get();
+  }
+
+  static Future<Map<String, dynamic>?> getUserInfo(String userKey) async {
+    Map<String, dynamic>? mapData;
+    var data = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userKey)
+        .collection("profile")
+        .doc("profile_id")
+        .get();
+
+    if (data.exists) {
+      mapData = data.data();
+    }
+
+    return mapData;
   }
 }

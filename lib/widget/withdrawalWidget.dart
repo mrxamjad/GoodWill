@@ -1,16 +1,22 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:good_will/Constants/FirebaseKey.dart';
 import 'package:good_will/data/Data.dart';
 import 'package:good_will/firebase/FirebaseService.dart';
+
+import 'package:good_will/widget/customToast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: camel_case_types
 class withdrawalWidget extends StatefulWidget {
+  // ignore: use_super_parameters
   const withdrawalWidget({Key? key}) : super(key: key);
 
   @override
   State<withdrawalWidget> createState() => _withdrawalWidgetState();
 }
 
+// ignore: camel_case_types
 class _withdrawalWidgetState extends State<withdrawalWidget> {
   TextEditingController amountController = TextEditingController();
   int amount = 0;
@@ -32,7 +38,7 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
           Container(
             height: 50,
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: const Text(
               "Withdraw Details",
               style: TextStyle(
@@ -60,7 +66,7 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                       controller: amountController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelStyle: TextStyle(fontSize: 18),
+                        labelStyle: const TextStyle(fontSize: 18),
                         hintStyle:
                             TextStyle(color: Colors.grey[400], fontSize: 32),
                         hintText: "₹",
@@ -158,7 +164,6 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                                     onChanged: (value) {
                                       setState(() {
                                         selectedValue = value!;
-                                        print("Seleceted value:$selectedValue");
                                       });
                                     },
                                   ),
@@ -227,7 +232,6 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                                     onChanged: (value) {
                                       setState(() {
                                         selectedValue = value!;
-                                        print("Seleceted value:$selectedValue");
                                       });
                                     },
                                   ),
@@ -300,37 +304,17 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                         builder: (context) {
                           return Dialog(
                             child: SizedBox(
-                              height: 200,
+                              height: 220,
                               child: Stack(
                                 clipBehavior: Clip.none,
                                 children: [
-                                  const Positioned(
-                                      right: 90,
-                                      top: -60,
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius: 50,
-                                        child: CircleAvatar(
-                                            backgroundColor: Colors.amber,
-                                            radius: 45,
-                                            child: Text(
-                                              "Alert !",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
-                                            )),
-                                      )),
                                   Container(
                                     margin: const EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        bottom: 20,
-                                        top: 40),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: Colors.teal, width: 1)),
+                                        left: 5, right: 5, bottom: 5, top: 5),
+                                    // decoration: BoxDecoration(
+                                    //     borderRadius: BorderRadius.circular(20),
+                                    //     border: Border.all(
+                                    //         color: Colors.teal, width: 1)),
                                     child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
@@ -340,7 +324,7 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                                           const Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.only(
-                                                  top: 25, left: 25, right: 25),
+                                                  top: 65, left: 5, right: 5),
                                               child: Center(
                                                 child: Text(
                                                   "Are you sure want to withdraw?",
@@ -354,88 +338,102 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                                               ),
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: ElevatedButton(
-                                                        style: ElevatedButton.styleFrom(
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            30))),
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child:
-                                                            const Text("No")),
-                                                  ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        "No",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
                                                 ),
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: ElevatedButton(
-                                                        style: ElevatedButton.styleFrom(
-                                                            backgroundColor:
-                                                                Colors.green,
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            30))),
-                                                        onPressed: () async {
-                                                          FirebaseService
-                                                              .addWithdrawHistory(
-                                                                  DataClass
-                                                                      .userKey,
-                                                                  amountController
-                                                                      .text,
-                                                                  paymentMethod,
-                                                                  bankAccount,
-                                                                  bankName,
-                                                                  ifsc);
-                                                          FirebaseService
-                                                              .updateWithdraw(
-                                                                  DataClass
-                                                                      .userKey,
-                                                                  amount);
-                                                          amountController
-                                                              .clear();
-                                                          // amountController.text="0";
-                                                          amount = 0;
-                                                          setState(() {});
-                                                          context.showToast(
-                                                              msg:
-                                                                  "Request submitted successfully",
-                                                              textColor:
-                                                                  Colors.white,
-                                                              bgColor:
-                                                                  Colors.green,
-                                                              position:
-                                                                  VxToastPosition
-                                                                      .top);
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        child: const Text(
-                                                            "Withdraw")),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                          backgroundColor:
+                                                              Colors.green,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
+                                                      onPressed: () async {
+                                                        FirebaseService
+                                                            .addWithdrawHistory(
+                                                                DataClass
+                                                                    .userKey,
+                                                                amountController
+                                                                    .text,
+                                                                paymentMethod,
+                                                                bankAccount,
+                                                                bankName,
+                                                                ifsc);
+                                                        FirebaseService
+                                                            .updateWithdraw(
+                                                                DataClass
+                                                                    .userKey,
+                                                                amount);
+                                                        amountController
+                                                            .clear();
+                                                        // amountController.text="0";
+                                                        amount = 0;
+                                                        setState(() {});
+                                                        customToast(
+                                                            context,
+                                                            "success",
+                                                            "Request submitted successfully");
+
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        "Withdraw",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      )),
+                                                ),
+                                              )
+                                            ],
                                           )
                                         ]),
                                   ),
+                                  const Positioned(
+                                      right: 90,
+                                      top: -45,
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.white,
+                                        radius: 50,
+                                        child: CircleAvatar(
+                                            backgroundColor: Colors.red,
+                                            radius: 45,
+                                            child: Text(
+                                              "Alert !",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20),
+                                            )),
+                                      )),
                                 ],
                               ),
                             ),
@@ -443,28 +441,21 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                         },
                       );
                     } else {
-                      context.showToast(
-                          msg: "Insufficiant balance..",
-                          bgColor: Colors.red,
-                          textColor: Colors.white,
-                          position: VxToastPosition.top);
+                      // ignore: use_build_context_synchronously
+                      customToast(context, "error", "Insufficiant balance..");
                     }
                   } else {
-                    context.showToast(
-                        msg: "Please enter a valid amount..",
-                        bgColor: Colors.red,
-                        textColor: Colors.white,
-                        position: VxToastPosition.top);
+                    customToast(
+                        context, "error", "Amout should be atleast 10!");
                   }
                 } else {
-                  context.showToast(
-                      msg: "Please add a payment method..",
-                      bgColor: Colors.red,
-                      textColor: Colors.white,
-                      position: VxToastPosition.top);
+                  customToast(context, "error", "Add a payment method!");
                 }
               },
-              child: const Text("Withdraw"),
+              child: const Text(
+                "Withdraw",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ],

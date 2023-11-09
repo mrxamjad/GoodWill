@@ -334,7 +334,11 @@ class _FizzGameState extends State<FizzGame> {
                                                           remainTime);
                                                     }
                                                   : null,
-                                              child: const Text("Red")),
+                                              child: const Text(
+                                                "Red",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
                                         )),
                                         Expanded(
                                             child: Container(
@@ -360,7 +364,11 @@ class _FizzGameState extends State<FizzGame> {
                                                           remainTime);
                                                     }
                                                   : null,
-                                              child: const Text("Green")),
+                                              child: const Text(
+                                                "Green",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
                                         ))
                                       ],
                                     ),
@@ -441,6 +449,7 @@ class _FizzGameState extends State<FizzGame> {
                                               child: const Text(
                                                 "Pink",
                                                 style: TextStyle(
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               )),
@@ -465,6 +474,7 @@ class _FizzGameState extends State<FizzGame> {
                                                   : null,
                                               child: const Text("Blue",
                                                   style: TextStyle(
+                                                    color: Colors.white,
                                                     fontWeight: FontWeight.bold,
                                                   ))),
                                         )),
@@ -497,6 +507,7 @@ class _FizzGameState extends State<FizzGame> {
                                                   : null,
                                               child: const Text("Purple",
                                                   style: TextStyle(
+                                                    color: Colors.white,
                                                     fontWeight: FontWeight.bold,
                                                   ))),
                                         ))
@@ -586,6 +597,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "1",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -616,6 +628,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "2",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -646,6 +659,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "3",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -681,6 +695,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "4",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -723,6 +738,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "8",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -753,6 +769,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "7",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -783,6 +800,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "6",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -818,6 +836,7 @@ class _FizzGameState extends State<FizzGame> {
                                                     child: const Text(
                                                       "5",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),

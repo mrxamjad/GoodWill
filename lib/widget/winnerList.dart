@@ -5,7 +5,7 @@ import 'package:good_will/widget/rowHeading.dart';
 Container winnerList(
     {String id = "ID", String winner = "", String matchType = ""}) {
   return Container(
-    height: 70,
+    // height: 50,
     margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
     padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
     decoration: BoxDecoration(

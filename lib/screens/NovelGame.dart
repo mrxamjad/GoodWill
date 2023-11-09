@@ -337,7 +337,11 @@ class _NovelGameState extends State<NovelGame> {
                                                           remainTime);
                                                     }
                                                   : null,
-                                              child: const Text("Red")),
+                                              child: const Text(
+                                                "Red",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
                                         )),
                                         Expanded(
                                             child: Container(
@@ -363,7 +367,11 @@ class _NovelGameState extends State<NovelGame> {
                                                           remainTime);
                                                     }
                                                   : null,
-                                              child: const Text("Green")),
+                                              child: const Text(
+                                                "Green",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              )),
                                         ))
                                       ],
                                     ),
@@ -444,6 +452,7 @@ class _NovelGameState extends State<NovelGame> {
                                               child: const Text(
                                                 "Pink",
                                                 style: TextStyle(
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               )),
@@ -468,6 +477,7 @@ class _NovelGameState extends State<NovelGame> {
                                                   : null,
                                               child: const Text("Blue",
                                                   style: TextStyle(
+                                                    color: Colors.white,
                                                     fontWeight: FontWeight.bold,
                                                   ))),
                                         )),
@@ -500,6 +510,7 @@ class _NovelGameState extends State<NovelGame> {
                                                   : null,
                                               child: const Text("Purple",
                                                   style: TextStyle(
+                                                    color: Colors.white,
                                                     fontWeight: FontWeight.bold,
                                                   ))),
                                         ))
@@ -589,6 +600,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "1",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -619,6 +631,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "2",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -649,6 +662,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "3",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -684,6 +698,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "4",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -726,6 +741,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "8",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -756,6 +772,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "7",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -786,6 +803,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "6",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -821,6 +839,7 @@ class _NovelGameState extends State<NovelGame> {
                                                     child: const Text(
                                                       "5",
                                                       style: TextStyle(
+                                                          color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                           fontSize: 18),
@@ -873,51 +892,54 @@ class _NovelGameState extends State<NovelGame> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 350,
-                child: FutureBuilder(
-                    future: FirebaseService.novelMatchHistory(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        var data = snapshot.data;
-                        List matchList = [];
+              Expanded(
+                child: SizedBox(
+                  child: FutureBuilder(
+                      future: FirebaseService.novelMatchHistory(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var data = snapshot.data;
+                          List matchList = [];
 
-                        data!.docs.map((e) => matchList.add(e.data())).toList();
-                        if (matchList.isNotEmpty) {
-                          return ListView.builder(
-                            padding: const EdgeInsets.only(top: 5),
-                            itemCount: matchList.length,
-                            itemBuilder: (context, index) {
-                              return winnerList(
-                                  id: matchList[index][FirebaseKey.matchId],
-                                  matchType: capitalizeWord(
-                                      matchList[index][FirebaseKey.matchType]),
-                                  winner: matchList[index]
-                                              [FirebaseKey.matchWinner] ==
-                                          ""
-                                      ? "--:--"
-                                      : capitalizeWord(matchList[index]
-                                          [FirebaseKey.matchWinner]));
-                            },
-                          );
+                          data!.docs
+                              .map((e) => matchList.add(e.data()))
+                              .toList();
+                          if (matchList.isNotEmpty) {
+                            return ListView.builder(
+                              padding: const EdgeInsets.only(top: 5),
+                              itemCount: matchList.length,
+                              itemBuilder: (context, index) {
+                                return winnerList(
+                                    id: matchList[index][FirebaseKey.matchId],
+                                    matchType: capitalizeWord(matchList[index]
+                                        [FirebaseKey.matchType]),
+                                    winner: matchList[index]
+                                                [FirebaseKey.matchWinner] ==
+                                            ""
+                                        ? "--:--"
+                                        : capitalizeWord(matchList[index]
+                                            [FirebaseKey.matchWinner]));
+                              },
+                            );
+                          } else {
+                            return const Center(
+                              child: Text(
+                                "No match history",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.teal),
+                              ),
+                            );
+                          }
+                        } else if (snapshot.hasError) {
+                          return const Text("--: Error :--");
                         } else {
                           return const Center(
-                            child: Text(
-                              "No match history",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.teal),
-                            ),
+                            child: CircularProgressIndicator(),
                           );
                         }
-                      } else if (snapshot.hasError) {
-                        return const Text("--: Error :--");
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    }),
+                      }),
+                ),
               )
             ],
           ),

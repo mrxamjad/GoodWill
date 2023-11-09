@@ -1,7 +1,6 @@
 // ignore: file_names
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:good_will/widget/customToast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:good_will/Constants/DataKey.dart';
@@ -63,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   /// Balance Card Design
                   child: SizedBox(
-                    height: 200,
+                    height: 220,
                     width: double.infinity,
                     child: StreamBuilder(
                         stream: FirebaseService.userRef
@@ -134,9 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ],
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
+                                      // const SizedBox(
+                                      //   height: 10,
+                                      // ),
                                       Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
@@ -177,10 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         setState(() {
                                                           recharge = !recharge;
                                                         });
-                                                        customToast(
-                                                            context,
-                                                            "success",
-                                                            "Programm is ghhgghghgfgfhgfghfgfgfdgfdffdgfdgfgffdffgrunnig");
                                                       },
                                                       child: const Text(
                                                         "RECHARGE",
@@ -196,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Padding(
                                         padding: const EdgeInsets.only(top: 3),
                                         child: SizedBox(
-                                          height: 21,
+                                          height: 25,
                                           child: Row(
                                             children: [
                                               Expanded(
@@ -381,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     itemCount: 4,
                     pagination: const SwiperPagination(),
-                    control: const SwiperControl(),
+                    control: const SwiperControl(color: Colors.teal),
                   ),
                 ),
               ],

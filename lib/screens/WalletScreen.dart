@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:good_will/Constants/FirebaseKey.dart';
 import 'package:good_will/data/Data.dart';
@@ -11,7 +12,7 @@ import 'package:good_will/widget/rechargeWidget.dart';
 import 'package:good_will/widget/withdrawalWidget.dart';
 
 class WalletScreen extends StatefulWidget {
-  const WalletScreen({Key? key}) : super(key: key);
+  const WalletScreen({super.key});
 
   @override
   State<WalletScreen> createState() => _WalletScreenState();
@@ -126,7 +127,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                           displayAmount(
                                               title: "Today Winning",
                                               amount:
-                                                  "${data[FirebaseKey.totalWinning]}",
+                                                  "${data[FirebaseKey.todayWinning]}",
                                               amountBgColor: Colors.green,
                                               amountColor: Colors.white),
                                           displayAmount(
@@ -136,7 +137,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                           displayAmount(
                                               title: "Withdraw Pending",
                                               amount:
-                                                  "${data[FirebaseKey.totalWinning]}",
+                                                  "${data[FirebaseKey.withdrawPending]}",
                                               amountColor: Colors.white,
                                               amountBgColor: Colors.amber),
                                         ],
@@ -150,9 +151,10 @@ class _WalletScreenState extends State<WalletScreen> {
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.purple,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.only(
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.only(
                                                 topRight: Radius.circular(30),
                                                 topLeft: Radius.circular(30),
                                               ))),
@@ -162,7 +164,12 @@ class _WalletScreenState extends State<WalletScreen> {
                                               recharge = false;
                                             });
                                           },
-                                          child: Text("Withdraw")),
+                                          child: const Text(
+                                            "Withdraw",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12),
+                                          )),
                                     ),
                                   )
                                 ],
@@ -205,7 +212,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 if (withdraw)
                   Stack(
                     children: [
-                      withdrawalWidget(),
+                      const withdrawalWidget(),
                       Positioned(
                           top: 20,
                           right: 40,
