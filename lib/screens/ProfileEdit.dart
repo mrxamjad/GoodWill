@@ -12,7 +12,7 @@ class ProfileEdit extends StatefulWidget {
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-  TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   String? name = "";
   @override
@@ -98,7 +98,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         fontSize: 14),
                                   ),
                                   Text(
-                                    "[ ${data[FirebaseKey.userId]} ]",
+                                    "[ ${data[FirebaseKey.phone]} ]",
                                     style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -119,71 +119,72 @@ class _ProfileEditState extends State<ProfileEdit> {
                         }),
                   ),
                 ),
-                Container(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: _nameController,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.teal, width: 0.5)),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.teal, width: 0.5)),
-                            labelText: "Name",
-                            hintText: "Enter your name",
-                            labelStyle: TextStyle(color: Colors.teal),
-                          ),
-                          onChanged: (value) {
-                            // _nameController.text=value;
-                          },
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.teal, width: 0.5)),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.teal, width: 0.5)),
+                          labelText: "Name",
+                          hintText: "Enter your name",
+                          labelStyle: TextStyle(color: Colors.teal),
                         ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal),
-                        onPressed: () {
-                          name = _nameController.text;
-                          setState(() {
-                            try {
-                              FirebaseService.userRef
-                                  .doc(DataClass.userKey)
-                                  .collection(FirebaseKey.profile)
-                                  .doc(FirebaseKey.profileId)
-                                  .update(
-                                      {FirebaseKey.name: _nameController.text});
-                            } catch (e) {}
-
-                            _nameController.clear();
-                          });
+                        onChanged: (value) {
+                          // _nameController.text=value;
                         },
-                        child: const Text("Update"),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(25.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text("Note: ",
-                                style: TextStyle(
-                                    color: Colors.teal,
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.bold)),
-                            Expanded(
-                                child: Text(
-                              "We never colllect your personal data for other use or third party use, its just colleted so that we can identify you later on.",
-                              style: TextStyle(color: Colors.teal, fontSize: 8),
-                            )),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal),
+                      onPressed: () {
+                        name = _nameController.text;
+                        setState(() {
+                          try {
+                            FirebaseService.userRef
+                                .doc(DataClass.userKey)
+                                .collection(FirebaseKey.profile)
+                                .doc(FirebaseKey.profileId)
+                                .update(
+                                    {FirebaseKey.name: _nameController.text});
+                          } catch (e) {}
+
+                          _nameController.clear();
+                        });
+                      },
+                      child: const Text(
+                        "Update",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Note: ",
+                              style: TextStyle(
+                                  color: Colors.teal,
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.bold)),
+                          Expanded(
+                              child: Text(
+                            "We never colllect your personal data for other use or third party use, its just colleted so that we can identify you later on.",
+                            style: TextStyle(color: Colors.teal, fontSize: 8),
+                          )),
+                        ],
+                      ),
+                    )
+                  ],
                 )
               ],
             ),

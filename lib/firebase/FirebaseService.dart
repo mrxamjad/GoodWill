@@ -22,12 +22,14 @@ class FirebaseService {
   // static final  CollectionReference paymentRef=  FirebaseFirestore.instance.collection("payment_details");
 
   // CREATE A NEW USER
-  static Future createUser(String uid, String name, String email) async {
+  static Future createUser(
+      String uid, String name, String email, String phone) async {
     final date = DateTime.now();
     final DocumentReference profileRef =
         userRef.doc(uid).collection("profile").doc("profile_id");
     await profileRef.set({
       FirebaseKey.emailId: email,
+      FirebaseKey.phone: phone,
       FirebaseKey.name: name,
       FirebaseKey.availableBalance: 0,
       FirebaseKey.totalWinning: 0,

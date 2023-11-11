@@ -26,21 +26,15 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
   String upiId = "", ifscCode = "", bankName = "", accountNumber = "";
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    upiId = "7260004480@paytm";
-    ifscCode = "SBIN0002905";
-    bankName = "STATE BANK OF INDIA";
-    accountNumber = "36270887631";
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: const Text("Bank Details"),
+        title: const Text(
+          "Bank Details",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
         centerTitle: true,
       ),
       body: Stack(
@@ -303,10 +297,10 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                                 ],
                               ),
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text("Note: ",
                                     style: TextStyle(
                                         color: Colors.teal,
@@ -341,7 +335,10 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                                   upi = false;
                                 });
                               },
-                              child: const Text("ADD UPI"),
+                              child: const Text(
+                                "ADD UPI",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                           const Text(
@@ -360,7 +357,10 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                                   bank = false;
                                 });
                               },
-                              child: const Text("ADD BANK A/C"),
+                              child: const Text(
+                                "ADD BANK A/C",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ],
@@ -457,7 +457,10 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                                         position: VxToastPosition.top);
                                   }
                                 },
-                                child: const Text("Add UPI"),
+                                child: const Text(
+                                  "Add UPI",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ],
@@ -633,18 +636,21 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                                         position: VxToastPosition.top);
                                   }
                                 },
-                                child: const Text("ADD BANK"),
+                                child: const Text(
+                                  "ADD BANK",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    Padding(
-                      padding: const EdgeInsets.all(25.0),
+                    const Padding(
+                      padding: EdgeInsets.all(25.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text("Note: ",
                               style: TextStyle(
                                   color: Colors.teal,

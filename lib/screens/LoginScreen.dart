@@ -19,34 +19,25 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   brightness: Brightness.light,
-      //   backgroundColor: Colors.white,
-      //   leading:
-      //   IconButton( onPressed: (){
-      //     Navigator.pop(context);
-      //   },icon:Icon(Icons.arrow_back_ios,size: 20,color: Colors.black,)),
-      // ),
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
+            SizedBox(
+              height: 30,
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 40),
               child: Align(
                   alignment: Alignment.topCenter,
                   child: Image.asset(
-                    'assets/logo1.png',
-                    height: 300,
+                    'assets/login.png',
+                    height: 200,
                   )),
             ),
             SizedBox(
-              height: 800,
               child: Form(
                 key: _formKey,
-                child: Container(
-                  padding: const EdgeInsets.only(top: 150),
-                  height: MediaQuery.of(context).size.height,
+                child: SizedBox(
                   width: double.infinity,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -84,10 +75,10 @@ class LoginScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(3),
                                         border: Border.all(
                                             color: Colors.black38, width: 0.2)),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         Text(
                                           " Login ",
                                           style: TextStyle(
@@ -175,10 +166,12 @@ class LoginScreen extends StatelessWidget {
                                                 .getInstance();
                                         pref.setString("user_id", id);
 
+                                        // ignore: use_build_context_synchronously
                                         context.nextAndRemoveUntilPage(
                                             const BottomNavigationBarExample());
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'user-not-found') {
+                                          // ignore: use_build_context_synchronously
                                           context.showToast(
                                               msg:
                                                   "No user found for that email.",
@@ -186,6 +179,7 @@ class LoginScreen extends StatelessWidget {
                                               textColor: Colors.white,
                                               position: VxToastPosition.top);
                                         } else if (e.code == 'wrong-password') {
+                                          // ignore: use_build_context_synchronously
                                           context.showToast(
                                               msg:
                                                   "Wrong password provided for that user.",
@@ -193,6 +187,7 @@ class LoginScreen extends StatelessWidget {
                                               textColor: Colors.white,
                                               position: VxToastPosition.top);
                                         } else {
+                                          // ignore: use_build_context_synchronously
                                           context.showToast(
                                               msg: "Login Failed!.",
                                               bgColor: Colors.red,
@@ -233,7 +228,7 @@ class LoginScreen extends StatelessWidget {
                                   context.nextPage(SignupScreen());
                                 },
                                 child: const Text(
-                                  " SignUp",
+                                  " Sign up",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 18,

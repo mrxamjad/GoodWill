@@ -5,13 +5,18 @@ import 'package:good_will/widget/WalletCard.dart';
 import '../widget/pageBackground.dart';
 
 class RechargeScreen extends StatelessWidget {
-  const RechargeScreen({Key? key}) : super(key: key);
+  const RechargeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text("Recharge"),
+        backgroundColor: Colors.teal,
+        title: const Text(
+          "Recharge",
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
         centerTitle: true,
       ),
       body: Stack(
@@ -22,7 +27,12 @@ class RechargeScreen extends StatelessWidget {
           Center(
             child: Column(
               children: [
-                WalletCard(availableBalence: "500", todayWinnig: "554", totalWinning: "265", withdrawPending: "254", topMargin: 30),
+                WalletCard(
+                    availableBalence: "500",
+                    todayWinnig: "554",
+                    totalWinning: "265",
+                    withdrawPending: "254",
+                    topMargin: 30),
                 Expanded(child: RechargeTab())
               ],
             ),

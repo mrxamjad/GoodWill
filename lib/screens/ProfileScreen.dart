@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:good_will/Constants/FirebaseKey.dart';
+
 import 'package:good_will/data/Data.dart';
-import 'package:good_will/firebase/FirebaseService.dart';
 
 import 'package:good_will/screens/BankDetailsScreen.dart';
 
@@ -57,81 +56,58 @@ class ProfileScreen extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                FutureBuilder(
-                    future: FirebaseService.userRef
-                        .doc(DataClass.userKey)
-                        .collection(FirebaseKey.profile)
-                        .doc(FirebaseKey.profileId)
-                        .get(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Center(
-                          child: Text("Error in loading"),
-                        );
-                      } else if (snapshot.hasData) {
-                        var data = snapshot.data;
-                        return SizedBox(
-                          height: 200,
-                          width: double.infinity,
-                          child: Card(
-                            color: Colors.grey[200],
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: const BorderSide(
-                                    width: 0.5, color: Colors.teal)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  radius: 50,
-                                  backgroundColor: Colors.teal,
-                                  child: Text(
-                                    data![FirebaseKey.name]
-                                        .toString()
-                                        .substring(0, 1)
-                                        .toUpperCase(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 63,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                                Text(
-                                  data[FirebaseKey.name]
-                                      .toString()
-                                      .toUpperCase(),
-                                  style: const TextStyle(
-                                    color: Colors.teal,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                Text(
-                                  data[FirebaseKey.emailId],
-                                  style: const TextStyle(
-                                      color: Colors.teal,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                                Text(
-                                  "[ ${data[FirebaseKey.userId]} ]",
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10),
-                                ),
-                              ],
-                            ),
+                SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: Card(
+                    color: Colors.grey[200],
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: const BorderSide(width: 0.5, color: Colors.teal)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.teal,
+                          child: Text(
+                            DataClass.name
+                                .toString()
+                                .substring(0, 1)
+                                .toUpperCase(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 63,
+                                color: Colors.white),
                           ),
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(
+                        ),
+                        Text(
+                          DataClass.name.toString().toUpperCase(),
+                          style: const TextStyle(
                             color: Colors.teal,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
-                        );
-                      }
-                    }),
+                        ),
+                        Text(
+                          DataClass.email,
+                          style: const TextStyle(
+                              color: Colors.teal,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                        Text(
+                          "[ ${DataClass.phone} ]",
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 ProfileItem(
                     context: context,
                     widget: ProfileEdit(),

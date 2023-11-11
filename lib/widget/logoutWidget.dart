@@ -14,27 +14,10 @@ TextButton logoutWidget(BuildContext context) {
           builder: (context) {
             return Dialog(
               child: SizedBox(
-                height: 200,
+                height: 250,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    const Positioned(
-                        right: 90,
-                        top: -60,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 50,
-                          child: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              radius: 45,
-                              child: Text(
-                                "Logout",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              )),
-                        )),
                     Container(
                       margin: const EdgeInsets.only(
                           left: 20, right: 20, bottom: 20, top: 40),
@@ -78,7 +61,11 @@ TextButton logoutWidget(BuildContext context) {
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: Text("No")),
+                                          child: const Text(
+                                            "No",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )),
                                     ),
                                   ),
                                   Expanded(
@@ -107,7 +94,11 @@ TextButton logoutWidget(BuildContext context) {
                                             context.nextAndRemoveUntilPage(
                                                 LoginScreen());
                                           },
-                                          child: Text("Logout")),
+                                          child: const Text(
+                                            "Logout",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )),
                                     ),
                                   )
                                 ],
@@ -115,6 +106,23 @@ TextButton logoutWidget(BuildContext context) {
                             )
                           ]),
                     ),
+                    const Positioned(
+                        right: 95,
+                        top: -60,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 60,
+                          child: CircleAvatar(
+                              backgroundColor: Colors.red,
+                              radius: 55,
+                              child: Text(
+                                "Logout",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              )),
+                        )),
                   ],
                 ),
               ),

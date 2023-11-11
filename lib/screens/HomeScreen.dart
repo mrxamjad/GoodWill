@@ -120,14 +120,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "User Id : ".toUpperCase(),
+                                              "PHONE : ".toUpperCase(),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 8,
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Text(
-                                              data[FirebaseKey.userId],
+                                              data[FirebaseKey.phone],
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 8,
