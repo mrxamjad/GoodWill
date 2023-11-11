@@ -80,6 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (data!.exists) {
                               DataClass.availableBalance =
                                   data[FirebaseKey.availableBalance];
+                              DataClass.name = data[FirebaseKey.name];
+                              DataClass.phone = data[FirebaseKey.phone];
+                              DataClass.email = data[FirebaseKey.emailId];
 
                               return Card(
                                 shape: RoundedRectangleBorder(

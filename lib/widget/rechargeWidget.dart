@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:good_will/data/Data.dart';
@@ -8,7 +9,7 @@ import 'package:quantupi/quantupi.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class RechargeWiget extends StatefulWidget {
-  RechargeWiget({super.key});
+  const RechargeWiget({super.key});
 
   @override
   State<RechargeWiget> createState() => _RechargeWigetState();
@@ -57,7 +58,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Column(
                   children: [
                     const Text(
@@ -67,7 +68,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
                           fontWeight: FontWeight.bold,
                           fontSize: 26),
                     ),
-                    Text("$status")
+                    Text(status)
                   ],
                 ),
               ),
@@ -100,7 +101,6 @@ class _RechargeWigetState extends State<RechargeWiget> {
                           onChanged: (value) {
                             setState(() {
                               selectedOption = value!;
-                              print("Seleceted value:$selectedOption");
                             });
                           },
                         ),
@@ -119,7 +119,6 @@ class _RechargeWigetState extends State<RechargeWiget> {
                           onChanged: (value) {
                             setState(() {
                               selectedOption = value!;
-                              print("Seleceted value:$selectedOption");
                             });
                           },
                         ),
@@ -138,7 +137,6 @@ class _RechargeWigetState extends State<RechargeWiget> {
                           onChanged: (value) {
                             setState(() {
                               selectedOption = value!;
-                              print("Seleceted value:$selectedOption");
                             });
                           },
                         ),
@@ -168,7 +166,7 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       controller: amountMultiple,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        labelStyle: TextStyle(fontSize: 18),
+                        labelStyle: const TextStyle(fontSize: 18),
                         hintStyle:
                             TextStyle(color: Colors.grey[400], fontSize: 8),
                         hintText: "Amount X ₹$selectedOption",
@@ -235,29 +233,14 @@ class _RechargeWigetState extends State<RechargeWiget> {
                   if (selectedOption * multiple >= 10) {
                     // context.nextPage(QuantUpiScreen());
                     setState(() async {
-                      // // FirebaseService.updateRecharge(DataClass.userKey,selectedOption * multiple);
-                      // FirebaseService.addRechargeHistory(DataClass.userKey,selectedOption * multiple , 'UPI', "2121212121", "", "").catchError((){
-                      //   context.showToast(msg: "Error recharge upadte");
-                      // });
-
-                      // String value = await initiateTransaction(
-                      //   app: isios ? appoptiontoenum(appname) : null,
-                      // );
-
-                      var data = FirebaseService.getUserInfo(DataClass.userKey);
-                      print(
-                          '-----------------------------------------------------');
-                      print(data);
-                      // print(data["phone"])
-
                       const platform =
                           MethodChannel('com.sabpaisa.integration/native');
                       final List<Object?> result =
                           await platform.invokeMethod('callSabPaisaSdk', [
-                        "sabpaa",
-                        "lastn",
-                        "ftter@gmail.com",
-                        "7260004480",
+                        (DataClass.name),
+                        "",
+                        (DataClass.email),
+                        (DataClass.phone),
                         "${selectedOption * multiple}"
                       ]);
 
@@ -287,13 +270,15 @@ class _RechargeWigetState extends State<RechargeWiget> {
                       amountMultiple.clear();
                       multiple = 0;
                     });
+                  } else {
+                    customToast(context, "error", 'Amount should atleast 10!!');
                   }
                 } catch (r) {
-                  context.showToast(
-                      msg: "Please enter a valid amount",
-                      bgColor: Colors.red,
-                      position: VxToastPosition.top,
-                      textColor: Colors.white);
+                  // context.showToast(
+                  //     msg: "Please enter a valid amount",
+                  //     bgColor: Colors.red,
+                  //     position: VxToastPosition.top,
+                  //     textColor: Colors.white);
                 }
               },
               child: const Text(
