@@ -11,13 +11,12 @@ Expanded rowHeading(
       flex: flex,
       child: Container(
           // height: 30,
-          padding: const EdgeInsets.symmetric(
-              // horizontal: 5,
-              vertical: 5),
+          margin: const EdgeInsets.symmetric(horizontal: 1),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
           decoration: BoxDecoration(
               color: bgColor, borderRadius: BorderRadius.circular(30)),
           child: Center(
-              child: Text(
+              child: SelectableText(
             name,
             style: TextStyle(
                 color: textColor,

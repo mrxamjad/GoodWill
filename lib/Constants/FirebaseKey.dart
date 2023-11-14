@@ -50,6 +50,7 @@ class FirebaseKey {
   static const matchId = "match_id";
   static const matchStartTime = "start_time";
   static const amount = "amount";
+  static const winningAmount = "winning_amount";
   static const selectedItem = "selected";
   static const matchType = "match_type";
   static const matchStatus = "match_status";

@@ -112,6 +112,12 @@ class _MatchScreenState extends State<MatchScreen> {
                                   }
 
                                   return matchList(
+                                      winner: dataList[index]
+                                          [FirebaseKey.matchWinner],
+                                      selected: dataList[index]
+                                          [FirebaseKey.selectedItem],
+                                      amount: dataList[index]
+                                          [FirebaseKey.amount],
                                       id: dataList[index][FirebaseKey.matchId],
                                       process: dataList[index]
                                                   [FirebaseKey.matchStatus] ==
@@ -127,7 +133,7 @@ class _MatchScreenState extends State<MatchScreen> {
                                               ? "Won"
                                               : "Lose",
                                       totalWinner:
-                                          "₹ ${dataList[index][FirebaseKey.amount]}",
+                                          "₹ ${!won ? dataList[index][FirebaseKey.amount] : dataList[index][FirebaseKey.winningAmount]}",
                                       match: matchName,
                                       showDate: true,
                                       date: dateTime);
