@@ -417,22 +417,25 @@ class _withdrawalWidgetState extends State<withdrawalWidget> {
                                           )
                                         ]),
                                   ),
-                                  const Positioned(
-                                      right: 90,
+                                  const Positioned.fill(
+                                      // right: 90,
                                       top: -45,
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius: 50,
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
                                         child: CircleAvatar(
-                                            backgroundColor: Colors.red,
-                                            radius: 45,
-                                            child: Text(
-                                              "Alert !",
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
-                                            )),
+                                          backgroundColor: Colors.white,
+                                          radius: 50,
+                                          child: CircleAvatar(
+                                              backgroundColor: Colors.red,
+                                              radius: 45,
+                                              child: Text(
+                                                "Alert !",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20),
+                                              )),
+                                        ),
                                       )),
                                 ],
                               ),

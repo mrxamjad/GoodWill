@@ -106,22 +106,24 @@ TextButton logoutWidget(BuildContext context) {
                             )
                           ]),
                     ),
-                    const Positioned(
-                        right: 95,
+                    const Positioned.fill(
                         top: -60,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 60,
+                        child: Align(
+                          alignment: Alignment.topCenter,
                           child: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              radius: 55,
-                              child: Text(
-                                "Logout",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              )),
+                            backgroundColor: Colors.white,
+                            radius: 60,
+                            child: CircleAvatar(
+                                backgroundColor: Colors.red,
+                                radius: 55,
+                                child: Text(
+                                  "Logout",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                )),
+                          ),
                         )),
                   ],
                 ),

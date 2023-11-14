@@ -65,7 +65,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                   Column(
                                     children: [
                                       Container(
-                                        margin: const EdgeInsets.all(5.0),
+                                        margin: const EdgeInsets.all(15.0),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -118,29 +118,33 @@ class _WalletScreenState extends State<WalletScreen> {
                                           ),
                                         ),
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          displayAmount(
-                                              title: "Today Winning",
-                                              amount:
-                                                  "${data[FirebaseKey.todayWinning]}",
-                                              amountBgColor: Colors.green,
-                                              amountColor: Colors.white),
-                                          displayAmount(
-                                              title: "Total Winning",
-                                              amount:
-                                                  "${data[FirebaseKey.totalWinning]}"),
-                                          displayAmount(
-                                              title: "Withdraw Pending",
-                                              amount:
-                                                  "${data[FirebaseKey.withdrawPending]}",
-                                              amountColor: Colors.white,
-                                              amountBgColor: Colors.amber),
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            // displayAmount(
+                                            //     title: "Today Winning",
+                                            //     amount:
+                                            //         "${data[FirebaseKey.todayWinning]}",
+                                            //     amountBgColor: Colors.green,
+                                            //     amountColor: Colors.white),
+                                            displayAmount(
+                                                title: "Total Winning",
+                                                amount:
+                                                    "${data[FirebaseKey.totalWinning]}"),
+                                            displayAmount(
+                                                title: "Withdraw Pending",
+                                                amount:
+                                                    "${data[FirebaseKey.withdrawPending]}",
+                                                amountColor: Colors.white,
+                                                amountBgColor: Colors.amber),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),

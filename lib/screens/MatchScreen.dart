@@ -82,11 +82,15 @@ class _MatchScreenState extends State<MatchScreen> {
                                           [FirebaseKey.matchStartTime]));
                                   dateTime = "$time, $date";
 
-                                  if (dataList[index]
-                                          [FirebaseKey.matchWinner] ==
-                                      dataList[index]
-                                          [FirebaseKey.selectedItem]) {
+                                  if (dataList[index][FirebaseKey.matchWinner]
+                                          .toString()
+                                          .toUpperCase() ==
+                                      dataList[index][FirebaseKey.selectedItem]
+                                          .toString()
+                                          .toUpperCase()) {
                                     won = true;
+                                  } else {
+                                    won = false;
                                   }
 
                                   String matchNameLatter = dataList[index]

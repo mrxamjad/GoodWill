@@ -20,7 +20,7 @@ class RechargeTab extends StatelessWidget {
           SizedBox(
             height: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 110),
+              padding: const EdgeInsets.only(bottom: 1),
               child: FutureBuilder(
                   future: FirebaseService.userRef
                       .doc(DataClass.userKey)
@@ -39,7 +39,7 @@ class RechargeTab extends StatelessWidget {
                       }).toList();
                       if (dataList.isNotEmpty) {
                         return Padding(
-                          padding: const EdgeInsets.only(bottom: 50),
+                          padding: const EdgeInsets.only(bottom: 1),
                           child: ListView.builder(
                             itemCount: dataList.length,
                             itemBuilder: (context, index) {
